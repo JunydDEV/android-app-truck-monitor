@@ -12,6 +12,7 @@ import javax.inject.Singleton
 class TrucksInfoRepositoryImpl @Inject constructor(
     private val remoteDatasource: RemoteDataSource,
     private val localDatasource: LocalDataSource,
+    private val exceptionHandler: ExceptionHandler
 ) : TrucksInfoRepository {
 
     override fun fetchTrucksInfoList(): Flow<List<TruckInfo>> {
