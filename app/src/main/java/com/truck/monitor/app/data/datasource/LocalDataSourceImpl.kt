@@ -3,7 +3,7 @@ package com.truck.monitor.app.data.datasource
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfo
 
-class LocalDataSourceImpl: LocalDataSource {
+internal class LocalDataSourceImpl: LocalDataSource {
 
     override fun fetchTrucksInfoList(): List<TruckInfo> {
         TODO("Not yet implemented")

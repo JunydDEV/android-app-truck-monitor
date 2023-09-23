@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TrucksInfoRepositoryImpl @Inject constructor(
+internal class TrucksInfoRepositoryImpl @Inject constructor(
     private val remoteDatasource: RemoteDataSource,
     private val localDatasource: LocalDataSource,
     private val exceptionHandler: ExceptionHandler
