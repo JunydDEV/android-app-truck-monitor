@@ -3,8 +3,7 @@ package com.truck.monitor.app.data.datasource
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfo
 
-interface TrucksInfoDataSource {
-
+interface LocalDataSource {
     /**
      * Fetches truck info list
      *
