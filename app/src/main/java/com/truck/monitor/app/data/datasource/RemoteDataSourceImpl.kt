@@ -12,7 +12,7 @@ class RemoteDataSourceImpl @Inject constructor(
 ) : RemoteDataSource {
 
     override fun fetchTrucksInfoList(): List<TruckInfo> {
-        TODO("Not yet implemented")
+        return apiService.getTrucksInfoList()
     }
 
     override fun searchTruckInfo(location: String): List<TruckInfo> {
