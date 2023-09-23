@@ -2,7 +2,9 @@ package com.truck.monitor.app.data.datasource
 
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfo
+import javax.inject.Singleton
 
+@Singleton
 class LocalDataSourceImpl: LocalDataSource {
 
     override fun fetchTrucksInfoList(): List<TruckInfo> {

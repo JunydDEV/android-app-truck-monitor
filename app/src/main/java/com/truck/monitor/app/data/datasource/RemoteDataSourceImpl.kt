@@ -2,8 +2,14 @@ package com.truck.monitor.app.data.datasource
 
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfo
+import com.truck.monitor.app.data.network.ApiService
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RemoteDataSourceImpl: RemoteDataSource {
+@Singleton
+class RemoteDataSourceImpl @Inject constructor(
+    private val apiService: ApiService
+) : RemoteDataSource {
 
     override fun fetchTrucksInfoList(): List<TruckInfo> {
         TODO("Not yet implemented")
