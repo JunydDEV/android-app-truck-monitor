@@ -1,4 +1,4 @@
-package com.truck.monitor.app
+package com.truck.monitor.app.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
