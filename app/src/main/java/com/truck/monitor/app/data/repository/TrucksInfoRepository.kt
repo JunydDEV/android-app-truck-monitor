@@ -20,13 +20,5 @@ interface TrucksInfoRepository {
      * @param location address to fetch the trucks info list.
      * @return list contains the info about the trucks of specified location.
      */
-    fun searchTruckInfo(location: String): Flow<List<TruckInfo>>
-
-    /**
-     * Sorts the truck info in ascending or descending order.
-     *
-     * @param order of listing the truck info in specific order i.e. ASCENDING or DESCENDING
-     * @return list in specific order
-     */
-    fun sortTrucksInfo(order: SortingOrder): Flow<List<TruckInfo>>
+    fun searchTruckInfo(location: String): Flow<DataState>
 }

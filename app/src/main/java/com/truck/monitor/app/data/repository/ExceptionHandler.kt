@@ -1,38 +1,38 @@
 package com.truck.monitor.app.data.repository
 
 import com.google.gson.JsonParseException
-import com.truck.monitor.app.data.model.DataRequestError
+import com.truck.monitor.app.data.model.DataFailureResponse
 import org.json.JSONException
 import java.io.IOException
 import javax.inject.Inject
 
 class ExceptionHandler @Inject constructor() {
 
-    fun handle(it: Throwable): DataRequestError {
+    fun handle(it: Throwable): DataFailureResponse {
         return when (it) {
             is IOException -> {
-                DataRequestError(
+                DataFailureResponse(
                     message = "Network Error",
                     description = "Make sure your device is connected to a working internet."
                 )
             }
 
             is JSONException -> {
-                DataRequestError(
+                DataFailureResponse(
                     message = "Invalid Response Error",
                     description = "Something went wrong on server side, please try again."
                 )
             }
 
             is JsonParseException -> {
-                DataRequestError(
+                DataFailureResponse(
                     message = "Invalid Response Error",
                     description = "Something went wrong on server side, please try again."
                 )
             }
 
             else -> {
-                DataRequestError(
+                DataFailureResponse(
                     message = "Unknown Error",
                     description = "Request failed due to unknown reasons, please try later."
                 )

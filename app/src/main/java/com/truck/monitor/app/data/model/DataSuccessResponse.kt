@@ -1,5 +1,5 @@
 package com.truck.monitor.app.data.model
 
-data class NetworkResponse<T>(
+data class DataSuccessResponse<T>(
     val data: T,
 )
