@@ -24,27 +24,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
+import com.truck.monitor.app.ui.bottomnavigation.BottomNavigationBar
+import com.truck.monitor.app.ui.bottomnavigation.BottomNavigationHost
 import com.truck.monitor.app.ui.theme.TruckMonitorAppTheme
 
 @Composable
 fun TrucksMonitoringApp() {
+    val navController = rememberNavController()
     TruckMonitorAppTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
-            content = { MainScreen() }
+            content = { MainScreen(navController) }
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = { AppTopBar() },
-        content = { paddingValues -> MainScreenContent(paddingValues = paddingValues) }
+        content = { paddingValues ->
+            MainScreenContent(
+                navController = navController,
+                paddingValues = paddingValues
+            )
+        },
+        bottomBar = { BottomNavigationBar(navController) }
     )
 }
 
@@ -55,7 +66,7 @@ fun MainScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
-            content = { MainScreen() }
+            content = { MainScreen(rememberNavController()) }
         )
     }
 }
@@ -94,40 +105,38 @@ fun SortListingAction() {
 }
 
 @Composable
-fun MainScreenContent(paddingValues: PaddingValues, modifier: Modifier = Modifier) {
+fun MainScreenContent(
+    navController: NavHostController,
+    paddingValues: PaddingValues,
+    modifier: Modifier = Modifier
+) {
     val searchFieldState = remember { mutableStateOf("") }
-    Column(modifier = modifier
-        .padding(paddingValues)
-        .fillMaxSize()) {
-
+    Column(
+        modifier = modifier.padding(paddingValues).fillMaxSize()
+    ) {
         SearchTextField(
             value = searchFieldState.value,
             onValueChange = { searchFieldState.value = it }
         )
 
-        BottomNavigationBar()
+        BottomNavigationHost(navController)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchTextField(modifier: Modifier = Modifier, value: String, onValueChange: (String) -> Unit) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .background(MaterialTheme.colorScheme.primary)
-        .padding(16.dp)) {
-
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(16.dp)
+    ) {
         TextField(
             value = value,
             onValueChange = { onValueChange(it) },
-            label = { Text(text = "Search")},
+            label = { Text(text = "Search") },
             modifier = Modifier.fillMaxWidth()
         )
     }
 }
-
-@Composable
-fun BottomNavigationBar() {
-    // TODO("Not yet implemented")
-}
-
