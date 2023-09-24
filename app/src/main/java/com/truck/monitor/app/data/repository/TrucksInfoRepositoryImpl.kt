@@ -26,6 +26,7 @@ class TrucksInfoRepositoryImpl @Inject constructor(
             val dataFailureResponse = exceptionHandler.handle(exception)
             emit(DataState.OnError(dataFailureResponse))
         }.onSuccess { response ->
+
             val dataSuccessResponse = DataSuccessResponse(response)
             localDatasource.saveTruckInfoList(response)
             emit(DataState.OnSuccess(dataSuccessResponse))

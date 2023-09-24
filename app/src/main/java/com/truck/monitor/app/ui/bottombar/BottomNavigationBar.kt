@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -40,6 +42,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                 selected = selectedItemState.value == index,
                 label = { Text(text = navigationItem.title) },
                 onClick = {
+                    if (navController.visibleEntries.value.isEmpty()) {
+                        return@NavigationBarItem
+                    }
+
                     selectedItemState.value = index
                     currentRouteState.value = navigationItem.route
                     navController.navigate(navigationItem.route) {
@@ -51,6 +57,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                         launchSingleTop = true
                         restoreState = true
                     }
+
                 },
             )
         }
@@ -61,3 +68,5 @@ sealed class NavigationItem(var route: String, val icon: ImageVector, var title:
     object ListItem : NavigationItem("List", Icons.Rounded.List, "List")
     object MapItem : NavigationItem("Map", Icons.Rounded.LocationOn, "Map")
 }
+
+fun NavGraph.isEmpty() = this.count() == 0
