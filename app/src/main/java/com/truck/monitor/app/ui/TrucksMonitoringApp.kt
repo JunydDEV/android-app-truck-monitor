@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
@@ -34,6 +35,8 @@ import com.truck.monitor.app.ui.theme.TruckMonitorAppTheme
 @Composable
 fun TrucksMonitoringApp() {
     val navController = rememberNavController()
+    val viewModel: MainViewModel = hiltViewModel()
+
     TruckMonitorAppTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
