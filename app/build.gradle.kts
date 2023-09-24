@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.okHttp3)
     implementation(libs.okHttp3.interceptor)
     implementation(libs.room)
-    implementation(libs.room.compiler)
+    annotationProcessor(libs.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
