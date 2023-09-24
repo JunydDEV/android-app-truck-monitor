@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
-import com.truck.monitor.app.ui.bottomnavigation.BottomNavigationBar
-import com.truck.monitor.app.ui.bottomnavigation.BottomNavigationHost
+import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
+import com.truck.monitor.app.ui.bottombar.BottomNavigationHost
 import com.truck.monitor.app.ui.theme.TruckMonitorAppTheme
 
 @Composable

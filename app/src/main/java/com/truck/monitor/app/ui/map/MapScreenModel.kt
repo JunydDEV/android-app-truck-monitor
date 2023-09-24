@@ -1,4 +1,4 @@
-package com.truck.monitor.app.ui.mapscreen
+package com.truck.monitor.app.ui.map
 
 import androidx.lifecycle.ViewModel
 import com.truck.monitor.app.domain.usecases.FetchTrucksInfoListUseCase

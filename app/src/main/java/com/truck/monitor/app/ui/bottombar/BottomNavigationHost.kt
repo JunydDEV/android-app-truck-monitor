@@ -1,4 +1,4 @@
-package com.truck.monitor.app.ui.bottomnavigation
+package com.truck.monitor.app.ui.bottombar
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.truck.monitor.app.ui.bottomnavigation.NavigationItem
 
 @Composable
 fun BottomNavigationHost(navController: NavHostController) {

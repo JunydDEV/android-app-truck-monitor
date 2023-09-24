@@ -1,4 +1,4 @@
-package com.truck.monitor.app.ui.bottomnavigation
+package com.truck.monitor.app.ui.bottombar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.List
