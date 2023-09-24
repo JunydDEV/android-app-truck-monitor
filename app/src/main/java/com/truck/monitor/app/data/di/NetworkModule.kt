@@ -19,13 +19,13 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideApiService(): ApiService {
-        val retrofit: Retrofit = getRetrofit(okHttpClient)
+        val retrofit: Retrofit = getRetrofit()
         return retrofit.create(ApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun getRetrofit(okHttpClient: OkHttpClient?): Retrofit {
+    fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

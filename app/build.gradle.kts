@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.okHttp3.interceptor)
     implementation(libs.room)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

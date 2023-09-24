@@ -18,7 +18,7 @@ class TrucksInfoRepositoryImpl @Inject constructor(
     private val exceptionHandler: ExceptionHandler
 ) : TrucksInfoRepository {
 
-    override fun fetchTrucksInfoList(): Flow<DataState> = flow {
+    override suspend fun fetchTrucksInfoList(): Flow<DataState> = flow {
         runCatching {
             remoteDatasource.fetchTrucksInfoList()
         }.onFailure { exception ->

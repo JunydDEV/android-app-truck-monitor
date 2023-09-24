@@ -1,8 +1,6 @@
 package com.truck.monitor.app.data.repository
 
 import com.truck.monitor.app.data.model.DataState
-import com.truck.monitor.app.data.model.SortingOrder
-import com.truck.monitor.app.data.model.TruckInfo
 import kotlinx.coroutines.flow.Flow
 
 interface TrucksInfoRepository {
@@ -12,7 +10,7 @@ interface TrucksInfoRepository {
      *
      * @return list contains info about the trucks i.e. location, driverName etc.
      */
-    fun fetchTrucksInfoList(): Flow<DataState>
+    suspend fun fetchTrucksInfoList(): Flow<DataState>
 
     /**
      * Search for the truck info list based on the location.

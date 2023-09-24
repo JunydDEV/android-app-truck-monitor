@@ -18,6 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,34 +31,55 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
+import com.truck.monitor.app.data.model.TruckInfoListItem
 import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
 import com.truck.monitor.app.ui.bottombar.BottomNavigationHost
+import com.truck.monitor.app.ui.common.FailureScreen
+import com.truck.monitor.app.ui.common.ProgressIndicator
+import com.truck.monitor.app.ui.state.UiState
 import com.truck.monitor.app.ui.theme.TruckMonitorAppTheme
 
 @Composable
 fun TrucksMonitoringApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
+    val truckInfoState = viewModel.trucksInfoStateFlow.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchTrucksInfoList()
+    }
 
     TruckMonitorAppTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
-            content = { MainScreen(navController) }
+            content = {
+                MainScreen(
+                    navController = navController,
+                    viewModel = viewModel,
+                    truckInfoState = truckInfoState
+                )
+            }
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun MainScreen(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel,
+    truckInfoState: State<UiState>
+) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = { AppTopBar() },
         content = { paddingValues ->
             MainScreenContent(
                 navController = navController,
-                paddingValues = paddingValues
+                paddingValues = paddingValues,
+                truckInfoState = truckInfoState
             )
         },
         bottomBar = { BottomNavigationBar(navController) }
@@ -69,7 +93,15 @@ fun MainScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
-            content = { MainScreen(rememberNavController()) }
+            content = {
+                MainScreen(
+                    navController = rememberNavController(),
+                    viewModel = hiltViewModel(),
+                    truckInfoState = remember {
+                        mutableStateOf(UiState.OnSuccess<List<TruckInfoListItem>>(emptyList()))
+                    }
+                )
+            }
         )
     }
 }
@@ -111,18 +143,42 @@ fun SortListingAction() {
 fun MainScreenContent(
     navController: NavHostController,
     paddingValues: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    truckInfoState: State<UiState>
 ) {
     val searchFieldState = remember { mutableStateOf("") }
     Column(
-        modifier = modifier.padding(paddingValues).fillMaxSize()
+        modifier = modifier
+            .padding(paddingValues)
+            .fillMaxSize()
     ) {
         SearchTextField(
             value = searchFieldState.value,
             onValueChange = { searchFieldState.value = it }
         )
 
-        BottomNavigationHost(navController)
+        when (val uiState = truckInfoState.value) {
+            is UiState.OnStart -> {
+                // Nothing TBD here.
+            }
+
+            is UiState.OnLoading -> {
+                ProgressIndicator()
+            }
+
+            is UiState.OnFailure -> {
+                FailureScreen(uiState)
+            }
+
+            is UiState.OnSuccess<*> -> {
+                val truckInfoList = uiState.data as List<TruckInfoListItem>
+                BottomNavigationHost(
+                    navController = navController,
+                    truckInfoData = TruckInfoData(truckInfoList)
+                )
+            }
+        }
+
     }
 }
 
