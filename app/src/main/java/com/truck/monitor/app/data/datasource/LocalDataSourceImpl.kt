@@ -19,4 +19,8 @@ class LocalDataSourceImpl: LocalDataSource {
         TODO("Not yet implemented")
     }
 
+    override fun saveTruckInfoList(response: List<TruckInfo>) {
+        TODO("Not yet implemented")
+    }
+
 }

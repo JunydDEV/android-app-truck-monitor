@@ -26,4 +26,9 @@ interface LocalDataSource {
      * @return list in specific order
      */
     fun sortTrucksInfo(order: SortingOrder): List<TruckInfo>
+
+    /**
+     * Saves remote data into local database
+     */
+    fun saveTruckInfoList(response: List<TruckInfo>)
 }
