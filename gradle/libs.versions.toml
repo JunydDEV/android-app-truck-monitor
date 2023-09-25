@@ -16,6 +16,7 @@ okhttp = "4.9.1"
 navigation = "2.5.3"
 dagger-hilt-android = "2.44"
 coil = "2.4.0"
+kotlinx-datetime = "0.4.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -46,6 +47,7 @@ hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-
 hilt-dagger = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt-android" }
 hilt-dagger-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt-android" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

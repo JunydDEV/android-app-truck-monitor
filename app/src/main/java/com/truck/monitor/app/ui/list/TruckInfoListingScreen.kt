@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,7 @@ fun TruckInfoListingScreen(data: TruckInfoData) {
     val size = list.size
     val smallSpacing = dimensionResource(id = R.dimen.small_spacing)
     LazyColumn(
-        modifier = Modifier.padding(smallSpacing),
+        modifier = Modifier.padding(dimensionResource(id = R.dimen.default_spacing)),
         verticalArrangement = Arrangement.spacedBy(smallSpacing)
     ) {
         items(size) {
@@ -45,14 +46,15 @@ fun TruckInfoListingScreen(data: TruckInfoData) {
                         modifier = Modifier
                             .size(dimensionResource(id = R.dimen.image_size))
                             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.corner_size))),
-                        model = truckInfoItem.imageURL,
+                        model = truckInfoItem.image,
+                        contentScale = ContentScale.Crop,
                         contentDescription = "driver image",
                     )
                     Column(verticalArrangement = Arrangement.spacedBy(smallSpacing)) {
                         TextX(label = "Plate No", value = truckInfoItem.plateNo)
                         TextX(label = "Driver Name", value = truckInfoItem.driverName)
-                        TextX(label = "Location", value = truckInfoItem.location)
-                        TextX(label = "Last Updated", value = truckInfoItem.lastUpdated)
+                        TextX(label = "Location", value = truckInfoItem.address)
+                        TextX(label = "Last Updated", value = truckInfoItem.lastUpdate)
                     }
                 }
 

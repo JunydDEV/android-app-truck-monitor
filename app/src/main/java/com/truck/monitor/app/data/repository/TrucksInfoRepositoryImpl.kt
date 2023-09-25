@@ -4,6 +4,7 @@ import com.truck.monitor.app.data.datasource.LocalDataSource
 import com.truck.monitor.app.data.datasource.RemoteDataSource
 import com.truck.monitor.app.data.model.DataState
 import com.truck.monitor.app.data.model.DataSuccessResponse
+import com.truck.monitor.app.data.model.TruckInfoMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +16,8 @@ import javax.inject.Singleton
 class TrucksInfoRepositoryImpl @Inject constructor(
     private val remoteDatasource: RemoteDataSource,
     private val localDatasource: LocalDataSource,
-    private val exceptionHandler: ExceptionHandler
+    private val exceptionHandler: ExceptionHandler,
+    private val truckInfoMapper: TruckInfoMapper
 ) : TrucksInfoRepository {
 
     override suspend fun fetchTrucksInfoList(): Flow<DataState> = flow {
@@ -26,8 +28,10 @@ class TrucksInfoRepositoryImpl @Inject constructor(
             val dataFailureResponse = exceptionHandler.handle(exception)
             emit(DataState.OnError(dataFailureResponse))
         }.onSuccess { response ->
-
-            val dataSuccessResponse = DataSuccessResponse(response)
+            val result = response.map {
+                truckInfoMapper.mapToDto(it)
+            }
+            val dataSuccessResponse = DataSuccessResponse(result)
             localDatasource.saveTruckInfoList(response)
             emit(DataState.OnSuccess(dataSuccessResponse))
         }

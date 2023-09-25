@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckInfoListItem
+import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
 import com.truck.monitor.app.ui.bottombar.BottomNavigationHost
 import com.truck.monitor.app.ui.common.FailureScreen
@@ -171,7 +172,7 @@ fun MainScreenContent(
             }
 
             is UiState.OnSuccess<*> -> {
-                val truckInfoList = uiState.data as List<TruckInfoListItem>
+                val truckInfoList = uiState.data as List<TruckInfoListItemDto>
                 BottomNavigationHost(
                     navController = navController,
                     truckInfoData = TruckInfoData(truckInfoList)
