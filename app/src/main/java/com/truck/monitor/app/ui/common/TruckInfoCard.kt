@@ -12,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,7 +20,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
@@ -52,13 +57,33 @@ fun TruckInfoCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(smallSpacing)
         ) {
-            val cacheKey = truckInfoItem.plateNo
-            val imageRequest = ImageRequest.Builder(LocalContext.current)
+
+            val context = LocalContext.current
+            val imageRequest = ImageRequest.Builder(context)
                 .data(truckInfoItem.image)
                 .crossfade(true)
                 .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.image_placeholder)
-                .diskCacheKey(cacheKey)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .allowHardware(true)
+                .diskCacheKey(truckInfoItem.image)
+                .memoryCacheKey(truckInfoItem.image)
+                .build()
+
+            val imageLoader = ImageLoader.Builder(LocalContext.current)
+                .bitmapFactoryMaxParallelism(10)
+                .respectCacheHeaders(false)
+                .memoryCache {
+                    MemoryCache
+                        .Builder(context)
+                        .build()
+                }
+                .diskCache {
+                    DiskCache.Builder()
+                        .directory(context.cacheDir.resolve("image_cache"))
+                        .build()
+                }
                 .build()
 
             AsyncImage(
@@ -67,6 +92,7 @@ fun TruckInfoCard(
                     .clip(RoundedCornerShape(dimensionResource(id = R.dimen.corner_size))),
                 model = imageRequest,
                 contentScale = ContentScale.Crop,
+                imageLoader = imageLoader,
                 contentDescription = "driver image",
             )
             Column(verticalArrangement = Arrangement.spacedBy(smallSpacing)) {
