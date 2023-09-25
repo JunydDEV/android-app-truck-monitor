@@ -16,10 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.disk.DiskCache
+import coil.request.ImageRequest
 import com.truck.monitor.app.R
 import com.truck.monitor.app.ui.TruckInfoData
 
@@ -42,11 +46,20 @@ fun TruckInfoListingScreen(data: TruckInfoData) {
                     horizontalArrangement = Arrangement.spacedBy(smallSpacing)
                 ) {
                     val truckInfoItem = list[it]
+                    val cacheKey = truckInfoItem.plateNo
+                    val imageRequest = ImageRequest.Builder(LocalContext.current)
+                        .data(truckInfoItem.image)
+                        .crossfade(true)
+                        .placeholder(R.drawable.image_placeholder)
+                        .error(R.drawable.image_placeholder)
+                        .diskCacheKey(cacheKey)
+                        .build()
+
                     AsyncImage(
                         modifier = Modifier
                             .size(dimensionResource(id = R.dimen.image_size))
                             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.corner_size))),
-                        model = truckInfoItem.image,
+                        model = imageRequest,
                         contentScale = ContentScale.Crop,
                         contentDescription = "driver image",
                     )
