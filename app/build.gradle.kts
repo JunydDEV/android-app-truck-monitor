@@ -76,6 +76,8 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     implementation(libs.coil)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.google.maps.compose)
+    implementation(libs.google.maps)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

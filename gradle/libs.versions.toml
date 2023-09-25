@@ -17,6 +17,8 @@ navigation = "2.5.3"
 dagger-hilt-android = "2.44"
 coil = "2.4.0"
 kotlinx-datetime = "0.4.1"
+google-maps-compose = "2.14.0"
+google-maps = "18.1.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -48,6 +50,8 @@ hilt-dagger = { group = "com.google.dagger", name = "hilt-android", version.ref 
 hilt-dagger-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt-android" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime"}
+google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "google-maps-compose"}
+google-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "google-maps" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

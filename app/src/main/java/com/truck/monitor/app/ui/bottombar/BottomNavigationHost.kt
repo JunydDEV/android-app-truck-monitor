@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.truck.monitor.app.ui.TruckInfoData
 import com.truck.monitor.app.ui.list.TruckInfoListingScreen
+import com.truck.monitor.app.ui.map.TruckInfoMapScreen
 
 @Composable
 fun BottomNavigationHost(navController: NavHostController, truckInfoData: TruckInfoData) {
@@ -20,7 +21,7 @@ fun BottomNavigationHost(navController: NavHostController, truckInfoData: TruckI
             TruckInfoListingScreen(data = truckInfoData)
         }
         composable(NavigationItem.MapItem.route) {
-            // TODO: Not yet implemented
+            TruckInfoMapScreen(data = truckInfoData)
         }
     }
 }
