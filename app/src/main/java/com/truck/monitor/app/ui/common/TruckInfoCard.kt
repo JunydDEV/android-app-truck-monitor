@@ -12,7 +12,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,8 +34,8 @@ import com.truck.monitor.app.ui.list.TextX
 fun TruckInfoCard(
     truckInfoItem: TruckInfoListItemDto,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
-    ) {
+    onClick: () -> Unit,
+) {
     val smallSpacing = dimensionResource(id = R.dimen.small_spacing)
     Card(
         modifier = modifier,
@@ -57,20 +56,7 @@ fun TruckInfoCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(smallSpacing)
         ) {
-
             val context = LocalContext.current
-            val imageRequest = ImageRequest.Builder(context)
-                .data(truckInfoItem.image)
-                .crossfade(true)
-                .placeholder(R.drawable.image_placeholder)
-                .error(R.drawable.image_placeholder)
-                .memoryCachePolicy(CachePolicy.ENABLED)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .allowHardware(true)
-                .diskCacheKey(truckInfoItem.image)
-                .memoryCacheKey(truckInfoItem.image)
-                .build()
-
             val imageLoader = ImageLoader.Builder(LocalContext.current)
                 .bitmapFactoryMaxParallelism(10)
                 .respectCacheHeaders(false)
@@ -84,6 +70,18 @@ fun TruckInfoCard(
                         .directory(context.cacheDir.resolve("image_cache"))
                         .build()
                 }
+                .build()
+
+            val imageRequest = ImageRequest.Builder(context)
+                .data(truckInfoItem.image)
+                .crossfade(true)
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .allowHardware(true)
+                .diskCacheKey(truckInfoItem.image)
+                .memoryCacheKey(truckInfoItem.image)
                 .build()
 
             AsyncImage(
