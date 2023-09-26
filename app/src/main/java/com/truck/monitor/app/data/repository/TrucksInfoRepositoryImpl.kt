@@ -30,7 +30,7 @@ class TrucksInfoRepositoryImpl @Inject constructor(
             exception.printStackTrace()
             handleException(exception)
         }.onSuccess { response ->
-            val result = response.map { truckInfoMapper.toDto(it) }
+            val result = response.map { truckInfoMapper.toTruckInfoListItemDto(it) }
             val dataSuccessResponse = DataSuccessResponse(result)
             localDatasource.saveTruckInfoList(result)
             emit(DataState.OnSuccess(dataSuccessResponse))

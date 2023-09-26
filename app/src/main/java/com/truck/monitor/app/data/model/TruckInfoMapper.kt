@@ -8,7 +8,7 @@ import kotlin.time.DurationUnit
 
 class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
 
-    suspend fun toDto(item: TruckInfoListItem): TruckInfoListItemDto {
+    suspend fun toTruckInfoListItemDto(item: TruckInfoListItem): TruckInfoListItemDto {
         val (lastUpdateInHours, lastUpdateInDays) = convertIntoDays(item.lastUpdated)
         return TruckInfoListItemDto(
             plateNo = item.plateNo,

@@ -10,7 +10,6 @@ import com.truck.monitor.app.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,9 +48,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun sortListOrdered(order: SortingOrder) {
+    fun sortListOrdered(sortingOrder: SortingOrder) {
         viewModelScope.launch {
-            sortTrucksInfoListingUseCase.sortListOrdered(order)
+            sortTrucksInfoListingUseCase.sortListOrdered(sortingOrder)
                 .collect {
                     when (it) {
                         is DataState.OnError -> {

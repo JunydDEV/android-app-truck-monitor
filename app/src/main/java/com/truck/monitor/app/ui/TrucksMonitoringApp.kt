@@ -47,13 +47,13 @@ fun TrucksMonitoringApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
     val truckInfoState = viewModel.trucksInfoStateFlow.collectAsState()
-    val sortingOrderState = remember { mutableStateOf<SortingOrder?>(null) }
-    LaunchedEffect(Unit) {
+    val sortingOrder = SortingOrder.ASC
+    val sortingOrderState = remember { mutableStateOf(sortingOrder) }
+    LaunchedEffect(key1 = null) {
         viewModel.fetchTrucksInfoList()
     }
-
-    sortingOrderState.value?.let {
-        viewModel.sortListOrdered(it)
+    LaunchedEffect(key1 = sortingOrderState.value) {
+        viewModel.sortListOrdered(sortingOrderState.value)
     }
 
     TruckMonitorAppTheme {
@@ -64,7 +64,8 @@ fun TrucksMonitoringApp() {
                 MainScreen(
                     navController = navController,
                     truckInfoState = truckInfoState,
-                    viewModel = viewModel
+                    sortOrderValue = sortingOrderState.value,
+                    onSortOrderValueChange = { sortingOrderState.value = it }
                 )
             }
         )
@@ -76,12 +77,18 @@ fun TrucksMonitoringApp() {
 fun MainScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel,
-    truckInfoState: State<UiState>
+    truckInfoState: State<UiState>,
+    sortOrderValue: SortingOrder,
+    onSortOrderValueChange:(SortingOrder) -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { AppTopBar(viewModel = viewModel) },
+        topBar = {
+            AppTopBar(
+                sortOrderValue = sortOrderValue,
+                onSortOrderValueChange = onSortOrderValueChange
+            )
+        },
         content = { paddingValues ->
             MainScreenContent(
                 navController = navController,
@@ -93,32 +100,16 @@ fun MainScreen(
     )
 }
 
-@Preview(showBackground = false)
-@Composable
-fun MainScreenPreview() {
-    TruckMonitorAppTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background,
-            content = {
-                MainScreen(
-                    navController = rememberNavController(),
-                    viewModel = hiltViewModel(),
-                    truckInfoState = remember {
-                        mutableStateOf(UiState.OnSuccess<List<TruckInfoListItem>>(emptyList()))
-                    }
-                )
-            }
-        )
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+fun AppTopBar(
+    modifier: Modifier = Modifier,
+    sortOrderValue: SortingOrder,
+    onSortOrderValueChange: (SortingOrder) -> Unit,
+) {
     CenterAlignedTopAppBar(
         title = { AppTitle() },
-        actions = { SortListingAction(viewModel) },
+        actions = { SortListingAction(sortOrderValue, onSortOrderValueChange) },
         modifier = modifier.fillMaxWidth(),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
@@ -136,8 +127,16 @@ fun AppTitle() {
 }
 
 @Composable
-fun SortListingAction(viewModel: MainViewModel) {
-    IconButton(onClick = {}) {
+fun SortListingAction(
+    sortOrderValue: SortingOrder,
+    onSortOrderValueChange: (SortingOrder) -> Unit,
+) {
+    IconButton(onClick = {
+        onSortOrderValueChange(
+            if (sortOrderValue == SortingOrder.ASC) SortingOrder.DESC
+            else SortingOrder.ASC
+        )
+    }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_sort),
             contentDescription = "sorting icon",

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class SortTrucksInfoListingUseCase @Inject constructor(private val repository: TrucksInfoRepository) {
 
-    suspend fun sortListOrdered(order: SortingOrder): Flow<DataState> {
-        return repository.sortListOrdered(order)
+    suspend fun sortListOrdered(sortingOrder: SortingOrder): Flow<DataState> {
+        return repository.sortListOrdered(sortingOrder)
     }
 }
