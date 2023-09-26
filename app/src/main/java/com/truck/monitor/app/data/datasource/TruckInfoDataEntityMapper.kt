@@ -17,7 +17,8 @@ class TruckInfoDataEntityMapper @Inject constructor(private val dispatcher: Coro
                     address = it.address,
                     latitude = it.latitude,
                     longitude = it.longitude,
-                    lastUpdated = it.lastUpdate
+                    lastUpdated = it.lastUpdate,
+                    lastUpdatedLabel = it.lastUpdateLabel
                 )
             }
         }
@@ -33,7 +34,8 @@ class TruckInfoDataEntityMapper @Inject constructor(private val dispatcher: Coro
                     address = it.address,
                     latitude = it.latitude,
                     longitude = it.longitude,
-                    lastUpdate = it.lastUpdated
+                    lastUpdate = it.lastUpdated,
+                    lastUpdateLabel = it.lastUpdatedLabel
                 )
             }
         }

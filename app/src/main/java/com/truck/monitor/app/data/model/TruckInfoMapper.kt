@@ -9,6 +9,7 @@ import kotlin.time.DurationUnit
 class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
 
     suspend fun toDto(item: TruckInfoListItem): TruckInfoListItemDto {
+        val (lastUpdateInHours, lastUpdateInDays) = convertIntoDays(item.lastUpdated)
         return TruckInfoListItemDto(
             plateNo = item.plateNo,
             image = cleanUpPicSumUrl(item.imageURL),
@@ -16,7 +17,8 @@ class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
             address = item.location,
             latitude = item.lat,
             longitude = item.long,
-            lastUpdate = convertIntoDays(item.lastUpdated)
+            lastUpdate = lastUpdateInHours,
+            lastUpdateLabel = lastUpdateInDays
         )
     }
 
@@ -31,17 +33,18 @@ class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
         }
     }
 
-    private suspend fun convertIntoDays(isoString: String): String {
+    private suspend fun convertIntoDays(isoString: String): Pair<Int, String> {
         return withContext(dispatcher) {
             try {
                 val pastTimeInstant = Instant.parse(isoString)
                 val currentTimeInstant = Clock.System.now()
                 val duration = currentTimeInstant - pastTimeInstant
                 val daysCount = duration.toInt(DurationUnit.DAYS)
-                prepareDaysCountLabel(daysCount)
+                val hoursCount = duration.toInt(DurationUnit.HOURS)
+                Pair(hoursCount, prepareDaysCountLabel(daysCount))
             } catch (e: Exception) {
                 e.printStackTrace()
-                "NA"
+                Pair(-1, "NA")
             }
         }
     }

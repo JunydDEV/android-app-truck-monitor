@@ -13,5 +13,6 @@ data class TruckInfoDataEntity(
     @ColumnInfo(name = "address") val address: String,
     @ColumnInfo(name = "latitude") val latitude: Double,
     @ColumnInfo(name = "longitude") val longitude: Double,
-    @ColumnInfo(name = "last_updated") val lastUpdated: String
+    @ColumnInfo(name = "last_updated") val lastUpdated: Int,
+    @ColumnInfo(name = "last_updated_label") val lastUpdatedLabel: String
 )

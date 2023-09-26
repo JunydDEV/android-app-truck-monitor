@@ -97,7 +97,7 @@ fun TruckInfoCard(
                 TextX(label = "Plate No", value = truckInfoItem.plateNo)
                 TextX(label = "Driver Name", value = truckInfoItem.driverName)
                 TextX(label = "Location", value = truckInfoItem.address)
-                TextX(label = "Last Updated", value = truckInfoItem.lastUpdate)
+                TextX(label = "Last Updated", value = truckInfoItem.lastUpdateLabel)
             }
         }
 

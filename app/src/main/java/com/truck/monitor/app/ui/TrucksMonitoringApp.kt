@@ -19,6 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
+import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfoListItem
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
@@ -45,9 +47,13 @@ fun TrucksMonitoringApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
     val truckInfoState = viewModel.trucksInfoStateFlow.collectAsState()
-
+    val sortingOrderState = remember { mutableStateOf<SortingOrder?>(null) }
     LaunchedEffect(Unit) {
         viewModel.fetchTrucksInfoList()
+    }
+
+    sortingOrderState.value?.let {
+        viewModel.sortListOrdered(it)
     }
 
     TruckMonitorAppTheme {
@@ -57,8 +63,8 @@ fun TrucksMonitoringApp() {
             content = {
                 MainScreen(
                     navController = navController,
-                    viewModel = viewModel,
-                    truckInfoState = truckInfoState
+                    truckInfoState = truckInfoState,
+                    viewModel = viewModel
                 )
             }
         )
@@ -75,7 +81,7 @@ fun MainScreen(
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { AppTopBar() },
+        topBar = { AppTopBar(viewModel = viewModel) },
         content = { paddingValues ->
             MainScreenContent(
                 navController = navController,
@@ -109,10 +115,10 @@ fun MainScreenPreview() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(modifier: Modifier = Modifier) {
+fun AppTopBar(modifier: Modifier = Modifier, viewModel: MainViewModel) {
     CenterAlignedTopAppBar(
         title = { AppTitle() },
-        actions = { SortListingAction() },
+        actions = { SortListingAction(viewModel) },
         modifier = modifier.fillMaxWidth(),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
@@ -130,8 +136,8 @@ fun AppTitle() {
 }
 
 @Composable
-fun SortListingAction() {
-    IconButton(onClick = { /*TODO*/ }) {
+fun SortListingAction(viewModel: MainViewModel) {
+    IconButton(onClick = {}) {
         Icon(
             painter = painterResource(id = R.drawable.ic_sort),
             contentDescription = "sorting icon",

@@ -7,5 +7,6 @@ data class TruckInfoListItemDto(
     val address: String,
     val latitude: Double,
     val longitude: Double,
-    val lastUpdate: String
+    val lastUpdate: Int,
+    val lastUpdateLabel: String
 )

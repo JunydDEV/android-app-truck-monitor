@@ -26,14 +26,18 @@ fun TruckInfoListingScreen(data: TruckInfoData) {
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.default_spacing)),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.default_spacing))
     ) {
-        items(truckInfoList.size) {
-            val truckInfoItem = truckInfoList[it]
-            TruckInfoCard(
-                truckInfoItem = truckInfoItem,
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {}
-            )
-        }
+        items(
+            count = truckInfoList.size,
+            key = { truckInfoList[it].plateNo },
+            itemContent = {
+                val truckInfoItem = truckInfoList[it]
+                TruckInfoCard(
+                    truckInfoItem = truckInfoItem,
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {}
+                )
+            }
+        )
     }
 }
 

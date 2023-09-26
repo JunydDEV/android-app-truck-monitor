@@ -4,8 +4,9 @@ import com.truck.monitor.app.data.datasource.LocalDataSource
 import com.truck.monitor.app.data.datasource.RemoteDataSource
 import com.truck.monitor.app.data.model.DataState
 import com.truck.monitor.app.data.model.DataSuccessResponse
+import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfoMapper
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -19,6 +20,7 @@ class TrucksInfoRepositoryImpl @Inject constructor(
     private val localDatasource: LocalDataSource,
     private val exceptionHandler: ExceptionHandler,
     private val truckInfoMapper: TruckInfoMapper,
+    private val dispatcher: CoroutineDispatcher
 ) : TrucksInfoRepository {
 
     override suspend fun fetchTrucksInfoList(): Flow<DataState> = flow {
@@ -33,15 +35,15 @@ class TrucksInfoRepositoryImpl @Inject constructor(
             localDatasource.saveTruckInfoList(result)
             emit(DataState.OnSuccess(dataSuccessResponse))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     private suspend fun FlowCollector<DataState>.handleException(exception: Throwable) {
-        val localData = localDatasource.fetchTrucksInfoList()
-        if (localData.isEmpty()) {
+        val truckInfoListItemDtos = localDatasource.fetchTrucksInfoList()
+        if (truckInfoListItemDtos.isEmpty()) {
             val dataFailureResponse = exceptionHandler.handle(exception)
             emit(DataState.OnError(dataFailureResponse))
         } else {
-            emit(DataState.OnSuccess(DataSuccessResponse(localData)))
+            emit(DataState.OnSuccess(DataSuccessResponse(truckInfoListItemDtos)))
         }
     }
 
@@ -56,5 +58,22 @@ class TrucksInfoRepositoryImpl @Inject constructor(
             val dataSuccessResponse = DataSuccessResponse(response)
             emit(DataState.OnSuccess(dataSuccessResponse))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
+
+    override suspend fun sortListOrdered(order: SortingOrder): Flow<DataState> = flow {
+        runCatching {
+            val truckInfoListItemDtos = localDatasource.fetchTrucksInfoList()
+            if (order == SortingOrder.ASC) {
+                truckInfoListItemDtos.sortedBy { it.lastUpdate }
+            } else {
+                truckInfoListItemDtos.sortedByDescending { it.lastUpdate }
+            }
+        }.onFailure { exception ->
+            exception.printStackTrace()
+            val dataFailureResponse = exceptionHandler.handle(exception)
+            emit(DataState.OnError(dataFailureResponse))
+        }.onSuccess { sortedList ->
+            emit(DataState.OnSuccess(DataSuccessResponse(sortedList)))
+        }
+    }.flowOn(dispatcher)
 }
