@@ -73,7 +73,7 @@ dependencies {
     implementation(libs.okHttp3)
     implementation(libs.okHttp3.interceptor)
     implementation(libs.room)
-    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
     implementation(libs.coil)
     implementation(libs.kotlinx.datetime)
     implementation(libs.google.maps.compose)

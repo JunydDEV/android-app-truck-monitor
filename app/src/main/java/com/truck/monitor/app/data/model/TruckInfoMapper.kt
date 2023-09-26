@@ -1,15 +1,14 @@
 package com.truck.monitor.app.data.model
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 
-class TruckInfoMapper(private val dispatcher: CoroutineDispatcher = IO) {
+class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
 
-    suspend fun mapToDto(item: TruckInfoListItem): TruckInfoListItemDto {
+    suspend fun toDto(item: TruckInfoListItem): TruckInfoListItemDto {
         return TruckInfoListItemDto(
             plateNo = item.plateNo,
             image = cleanUpPicSumUrl(item.imageURL),
