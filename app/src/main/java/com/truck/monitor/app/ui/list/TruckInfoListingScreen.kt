@@ -11,13 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
 import com.truck.monitor.app.R
 import com.truck.monitor.app.ui.TruckInfoData
 import com.truck.monitor.app.ui.common.TruckInfoCard

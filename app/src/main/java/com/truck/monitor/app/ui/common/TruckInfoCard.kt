@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.disk.DiskCache
@@ -38,12 +38,12 @@ fun TruckInfoCard(
 ) {
     val smallSpacing = dimensionResource(id = R.dimen.small_spacing)
     Card(
-        modifier = modifier,
+        modifier = modifier.height(dimensionResource(id = R.dimen.card_normal_height)),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.onPrimary
         ),
         elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 10.dp
+            defaultElevation = dimensionResource(id = R.dimen.card_elevation)
         ),
         onClick = {
             onClick()

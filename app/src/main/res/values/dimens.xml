@@ -5,7 +5,9 @@
     <dimen name="default_spacing">16dp</dimen>
     <dimen name="large_spacing">20dp</dimen>
 
-    <dimen name="corner_size">10dp</dimen>
     <dimen name="image_size">100dp</dimen>
+    <dimen name="corner_size">10dp</dimen>
     <dimen name="card_width_on_map">350dp</dimen>
+    <dimen name="card_normal_height">116dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
 </resources>
