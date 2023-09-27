@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -42,14 +42,11 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
         }
         val markerState = rememberMarkerState()
         val titleState = remember { mutableStateOf("") }
-
         val lazyRowState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
-        SideEffect {
-            coroutineScope.launch {
-                lazyRowState.animateScrollToItem(0)
-            }
-        }
+
+        val visibleItemState =
+            rememberSaveable { mutableStateOf(0) }
 
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
@@ -58,17 +55,15 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
                 zoomControlsEnabled = false
             ),
             onMapLoaded = {
-                val firstItem = truckInfoList.firstOrNull()
-                firstItem?.let {
-                    coroutineScope.launch {
-                        lazyRowState.animateScrollToItem(0)
-                        val selectItemLatLng =
-                            LatLng(firstItem.latitude, firstItem.longitude)
-                        cameraPositionState.position =
-                            CameraPosition.fromLatLngZoom(selectItemLatLng, zoomLevel)
-                        markerState.position = selectItemLatLng
-                        titleState.value = firstItem.location
-                    }
+                val firstVisibleItem = truckInfoList[visibleItemState.value]
+                coroutineScope.launch {
+                    lazyRowState.animateScrollToItem(visibleItemState.value)
+                    val selectItemLatLng =
+                        LatLng(firstVisibleItem.latitude, firstVisibleItem.longitude)
+                    cameraPositionState.position =
+                        CameraPosition.fromLatLngZoom(selectItemLatLng, zoomLevel)
+                    markerState.position = selectItemLatLng
+                    titleState.value = firstVisibleItem.location
                 }
             }
         ) {
@@ -98,6 +93,7 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
                                 CameraPosition.fromLatLngZoom(selectItemLatLng, zoomLevel)
                             markerState.position = selectItemLatLng
                             titleState.value = truckInfoItem.location
+                            visibleItemState.value = it
                         }
                     }
                 )

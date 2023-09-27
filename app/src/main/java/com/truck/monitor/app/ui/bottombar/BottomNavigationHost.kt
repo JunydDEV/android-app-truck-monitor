@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.ui.TruckInfoData
 import com.truck.monitor.app.ui.list.TruckInfoListingScreen
 import com.truck.monitor.app.ui.map.TruckInfoMapScreen
