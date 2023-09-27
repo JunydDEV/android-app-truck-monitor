@@ -5,6 +5,7 @@ import com.truck.monitor.app.data.datasource.RemoteDataSource
 import com.truck.monitor.app.data.model.DataState
 import com.truck.monitor.app.data.model.DataSuccessResponse
 import com.truck.monitor.app.data.model.SortingOrder
+import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import com.truck.monitor.app.data.model.TruckInfoMapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -31,8 +32,8 @@ class TrucksInfoRepositoryImpl @Inject constructor(
             handleException(exception)
         }.onSuccess { response ->
             val result = response.map { truckInfoMapper.toTruckInfoListItemDto(it) }
-            val dataSuccessResponse = DataSuccessResponse(result)
             localDatasource.saveTruckInfoList(result)
+            val dataSuccessResponse = DataSuccessResponse(result)
             emit(DataState.OnSuccess(dataSuccessResponse))
         }
     }.flowOn(dispatcher)

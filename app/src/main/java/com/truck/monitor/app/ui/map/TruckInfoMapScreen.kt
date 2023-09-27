@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,7 +35,7 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
         contentAlignment = Alignment.BottomCenter
     ) {
         val truckInfoList = data.list
-        val zoomLevel = 25f
+        val zoomLevel = 15f
         val initialLatLng = LatLng(23.4241, 53.8478)
         val cameraPositionState = rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(initialLatLng, zoomLevel)
@@ -47,7 +48,8 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
             cameraPositionState = cameraPositionState,
             uiSettings = MapUiSettings(
                 zoomControlsEnabled = false
-            )
+            ),
+
         ) {
             Marker(
                 state = markerState,
@@ -57,6 +59,12 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
 
         val lazyRowState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
+        SideEffect {
+            coroutineScope.launch {
+                lazyRowState.animateScrollToItem(0)
+            }
+        }
+
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             state = lazyRowState,

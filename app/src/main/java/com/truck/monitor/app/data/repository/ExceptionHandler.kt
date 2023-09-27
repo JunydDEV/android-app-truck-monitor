@@ -4,6 +4,7 @@ import com.google.gson.JsonParseException
 import com.truck.monitor.app.data.model.DataFailureResponse
 import org.json.JSONException
 import java.io.IOException
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class ExceptionHandler @Inject constructor() {
@@ -28,6 +29,14 @@ class ExceptionHandler @Inject constructor() {
                 DataFailureResponse(
                     message = "Invalid Response Error",
                     description = "Something went wrong on server side, please try again."
+                )
+            }
+
+            // Room throws this exception when the integrity of the database is failed
+            is IllegalStateException -> {
+                DataFailureResponse(
+                    message = "Data Storage Error",
+                    description = "Failed to interact with local database, clear the app data and try again."
                 )
             }
 

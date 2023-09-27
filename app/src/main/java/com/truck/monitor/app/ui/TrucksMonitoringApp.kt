@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,10 +22,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,18 +46,22 @@ import com.truck.monitor.app.ui.common.FailureScreen
 import com.truck.monitor.app.ui.common.ProgressIndicator
 import com.truck.monitor.app.ui.state.UiState
 import com.truck.monitor.app.ui.theme.TruckMonitorAppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun TrucksMonitoringApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
     val truckInfoState = viewModel.trucksInfoStateFlow.collectAsState()
-    val sortingOrderState = remember { mutableStateOf(SortingOrder.ASC) }
-    LaunchedEffect(key1 = null) {
+    val sortingOrderState = remember { mutableStateOf<SortingOrder?>(null) }
+
+    LaunchedEffect(Unit) {
         viewModel.fetchTrucksInfoList()
     }
     LaunchedEffect(key1 = sortingOrderState.value) {
-        viewModel.sortListOrdered(sortingOrderState.value)
+        sortingOrderState.value?.let {
+            viewModel.sortListOrdered(it)
+        }
     }
 
     TruckMonitorAppTheme {
@@ -77,7 +86,7 @@ fun MainScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     truckInfoState: State<UiState>,
-    sortOrderValue: SortingOrder,
+    sortOrderValue: SortingOrder?,
     onSortOrderValueChange:(SortingOrder) -> Unit,
 ) {
     Scaffold(
@@ -103,7 +112,7 @@ fun MainScreen(
 @Composable
 fun AppTopBar(
     modifier: Modifier = Modifier,
-    sortOrderValue: SortingOrder,
+    sortOrderValue: SortingOrder?,
     onSortOrderValueChange: (SortingOrder) -> Unit,
 ) {
     CenterAlignedTopAppBar(
@@ -127,7 +136,7 @@ fun AppTitle() {
 
 @Composable
 fun SortListingAction(
-    sortOrderValue: SortingOrder,
+    sortOrderValue: SortingOrder?,
     onSortOrderValueChange: (SortingOrder) -> Unit,
 ) {
     IconButton(onClick = {
