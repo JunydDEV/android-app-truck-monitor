@@ -36,26 +36,12 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
     ) {
         val truckInfoList = data.list
         val zoomLevel = 15f
-        val initialLatLng = LatLng(23.4241, 53.8478)
+        val uaeLatLng = LatLng(23.4241, 53.8478)
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(initialLatLng, zoomLevel)
+            position = CameraPosition.fromLatLngZoom(uaeLatLng, zoomLevel)
         }
         val markerState = rememberMarkerState()
         val titleState = remember { mutableStateOf("") }
-
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState,
-            uiSettings = MapUiSettings(
-                zoomControlsEnabled = false
-            ),
-
-        ) {
-            Marker(
-                state = markerState,
-                title = titleState.value
-            )
-        }
 
         val lazyRowState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
@@ -63,6 +49,33 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
             coroutineScope.launch {
                 lazyRowState.animateScrollToItem(0)
             }
+        }
+
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            cameraPositionState = cameraPositionState,
+            uiSettings = MapUiSettings(
+                zoomControlsEnabled = false
+            ),
+            onMapLoaded = {
+                val firstItem = truckInfoList.firstOrNull()
+                firstItem?.let {
+                    coroutineScope.launch {
+                        lazyRowState.animateScrollToItem(0)
+                        val selectItemLatLng =
+                            LatLng(firstItem.latitude, firstItem.longitude)
+                        cameraPositionState.position =
+                            CameraPosition.fromLatLngZoom(selectItemLatLng, zoomLevel)
+                        markerState.position = selectItemLatLng
+                        titleState.value = firstItem.location
+                    }
+                }
+            }
+        ) {
+            Marker(
+                state = markerState,
+                title = titleState.value
+            )
         }
 
         LazyRow(
