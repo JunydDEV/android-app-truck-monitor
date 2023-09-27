@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.truck.monitor.app.data.model.DataState
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.domain.usecases.FetchTrucksInfoListUseCase
+import com.truck.monitor.app.domain.usecases.SearchTrucksInfoUseCase
 import com.truck.monitor.app.domain.usecases.SortTrucksInfoListingUseCase
 import com.truck.monitor.app.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val fetchTrucksInfoListUseCase: FetchTrucksInfoListUseCase,
-    private val sortTrucksInfoListingUseCase: SortTrucksInfoListingUseCase
+    private val sortTrucksInfoListingUseCase: SortTrucksInfoListingUseCase,
+    private val searchTrucksInfoUseCase: SearchTrucksInfoUseCase
 ) : ViewModel() {
 
     private val _trucksInfoStateFlow = MutableStateFlow<UiState>(UiState.OnStart)

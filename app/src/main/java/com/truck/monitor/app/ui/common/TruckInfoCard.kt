@@ -96,7 +96,7 @@ fun TruckInfoCard(
             Column(verticalArrangement = Arrangement.spacedBy(smallSpacing)) {
                 TextX(label = "Plate No", value = truckInfoItem.plateNo)
                 TextX(label = "Driver Name", value = truckInfoItem.driverName)
-                TextX(label = "Location", value = truckInfoItem.address)
+                TextX(label = "Location", value = truckInfoItem.location)
                 TextX(label = "Last Updated", value = truckInfoItem.lastUpdateLabel)
             }
         }

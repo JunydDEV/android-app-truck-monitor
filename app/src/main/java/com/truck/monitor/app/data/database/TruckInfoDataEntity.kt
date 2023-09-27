@@ -10,7 +10,7 @@ data class TruckInfoDataEntity(
     @ColumnInfo(name = "plate_no") val plateNo: String,
     @ColumnInfo(name = "driver_name") val driverName: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-    @ColumnInfo(name = "address") val address: String,
+    @ColumnInfo(name = "location") val location: String,
     @ColumnInfo(name = "latitude") val latitude: Double,
     @ColumnInfo(name = "longitude") val longitude: Double,
     @ColumnInfo(name = "last_updated") val lastUpdated: Int,

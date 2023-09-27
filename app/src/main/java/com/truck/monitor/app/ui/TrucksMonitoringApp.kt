@@ -47,8 +47,7 @@ fun TrucksMonitoringApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
     val truckInfoState = viewModel.trucksInfoStateFlow.collectAsState()
-    val sortingOrder = SortingOrder.ASC
-    val sortingOrderState = remember { mutableStateOf(sortingOrder) }
+    val sortingOrderState = remember { mutableStateOf(SortingOrder.ASC) }
     LaunchedEffect(key1 = null) {
         viewModel.fetchTrucksInfoList()
     }
@@ -160,7 +159,7 @@ fun MainScreenContent(
     ) {
         SearchTextField(
             value = searchFieldState.value,
-            onValueChange = { searchFieldState.value = it }
+            onValueChange = { searchFieldState.value = it },
         )
 
         when (val uiState = truckInfoState.value) {
@@ -201,7 +200,8 @@ fun SearchTextField(modifier: Modifier = Modifier, value: String, onValueChange:
             value = value,
             onValueChange = { onValueChange(it) },
             label = { Text(text = "Search") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
     }
 }

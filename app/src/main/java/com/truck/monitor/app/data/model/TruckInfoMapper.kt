@@ -14,7 +14,7 @@ class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
             plateNo = item.plateNo,
             image = cleanUpPicSumUrl(item.imageURL),
             driverName = item.driverName,
-            address = item.location,
+            location = item.location,
             latitude = item.lat,
             longitude = item.long,
             lastUpdate = lastUpdateInHours,

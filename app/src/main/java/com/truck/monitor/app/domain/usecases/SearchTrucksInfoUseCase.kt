@@ -6,5 +6,8 @@ import javax.inject.Inject
 class SearchTrucksInfoUseCase @Inject constructor(
     private val repository: TrucksInfoRepository
 ) {
+    fun search() {
+        TODO("Not yet implemented")
+    }
 
 }

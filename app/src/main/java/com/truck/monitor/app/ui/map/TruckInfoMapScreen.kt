@@ -76,7 +76,7 @@ fun TruckInfoMapScreen(data: TruckInfoData) {
                             cameraPositionState.position =
                                 CameraPosition.fromLatLngZoom(selectItemLatLng, zoomLevel)
                             markerState.position = selectItemLatLng
-                            titleState.value = truckInfoItem.address
+                            titleState.value = truckInfoItem.location
                         }
                     }
                 )
