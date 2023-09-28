@@ -1,6 +1,7 @@
 package com.truck.monitor.app.data.repository
 
 import com.google.gson.JsonParseException
+import com.truck.monitor.app.data.datasource.SearchResultNotFoundException
 import com.truck.monitor.app.data.model.DataFailureResponse
 import org.json.JSONException
 import java.io.IOException
@@ -37,6 +38,13 @@ class ExceptionHandler @Inject constructor() {
                 DataFailureResponse(
                     message = "Data Storage Error",
                     description = "Failed to interact with local database, clear the app data and try again."
+                )
+            }
+
+            is SearchResultNotFoundException -> {
+                DataFailureResponse(
+                    message = it.message,
+                    description = "Sorry, we couldn't find any results for you."
                 )
             }
 

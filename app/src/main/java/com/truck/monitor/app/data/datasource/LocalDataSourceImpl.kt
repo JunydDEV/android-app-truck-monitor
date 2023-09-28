@@ -33,7 +33,13 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun searchTruckInfo(query: String): List<TruckInfoListItemDto> {
         return withContext(dispatcher) {
             val truckInfoDataList = appDao.getTruckInfoEntitiesList(query)
-            truckInfoDataEntityMapper.toDtoList(truckInfoDataList ?: emptyList())
+            if (truckInfoDataList.isNullOrEmpty()) {
+                throw SearchResultNotFoundException("Search results not found")
+            } else {
+                truckInfoDataEntityMapper.toDtoList(truckInfoDataList)
+            }
         }
     }
 }
+
+class SearchResultNotFoundException(override val message: String) : Exception(message)
