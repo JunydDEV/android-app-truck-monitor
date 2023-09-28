@@ -19,7 +19,8 @@ class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun fetchTrucksInfoList(): List<TruckInfoListItemDto> {
         return withContext(dispatcher) {
-            truckInfoDataEntityMapper.toDtoList(appDao.getTruckInfoEntitiesList() ?: emptyList())
+            val truckInfoDataList = appDao.getTruckInfoEntitiesList()
+            truckInfoDataEntityMapper.toDtoList(truckInfoDataList ?: emptyList())
         }
     }
 
@@ -29,11 +30,10 @@ class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchTruckInfo(location: String): List<TruckInfoListItemDto> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun sortTrucksInfo(order: SortingOrder): List<TruckInfoListItemDto> {
-        TODO("Not yet implemented")
+    override suspend fun searchTruckInfo(query: String): List<TruckInfoListItemDto> {
+        return withContext(dispatcher) {
+            val truckInfoDataList = appDao.getTruckInfoEntitiesList(query)
+            truckInfoDataEntityMapper.toDtoList(truckInfoDataList ?: emptyList())
+        }
     }
 }

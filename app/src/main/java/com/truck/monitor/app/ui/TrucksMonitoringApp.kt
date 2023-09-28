@@ -61,6 +61,7 @@ fun TrucksMonitoringApp() {
             color = MaterialTheme.colorScheme.background,
             content = {
                 MainScreen(
+                    viewModel = viewModel,
                     navController = navController,
                     truckInfoState = truckInfoState,
                     sortOrderValue = sortingOrderState.value,
@@ -74,6 +75,7 @@ fun TrucksMonitoringApp() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
+    viewModel: MainViewModel,
     navController: NavHostController,
     modifier: Modifier = Modifier,
     truckInfoState: State<UiState>,
@@ -90,6 +92,7 @@ fun MainScreen(
         },
         content = { paddingValues ->
             MainScreenContent(
+                viewModel = viewModel,
                 navController = navController,
                 paddingValues = paddingValues,
                 truckInfoState = truckInfoState
@@ -146,12 +149,17 @@ fun SortListingAction(
 
 @Composable
 fun MainScreenContent(
+    viewModel: MainViewModel,
     navController: NavHostController,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
     truckInfoState: State<UiState>
 ) {
     val searchFieldState = remember { mutableStateOf("") }
+    LaunchedEffect(key1 = searchFieldState.value) {
+        viewModel.searchLocation(searchFieldState.value)
+    }
+
     Column(
         modifier = modifier
             .padding(paddingValues)

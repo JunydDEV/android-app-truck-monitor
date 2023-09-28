@@ -48,9 +48,9 @@ class TrucksInfoRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchTruckInfo(location: String): Flow<DataState> = flow {
+    override fun searchTruckInfo(query: String): Flow<DataState> = flow {
         runCatching {
-            localDatasource.searchTruckInfo(location)
+            localDatasource.searchTruckInfo(query)
         }.onFailure { exception ->
             exception.printStackTrace()
             val dataFailureResponse = exceptionHandler.handle(exception)

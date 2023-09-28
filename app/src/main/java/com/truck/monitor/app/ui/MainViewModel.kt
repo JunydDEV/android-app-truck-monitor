@@ -72,4 +72,30 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun searchLocation(query: String) {
+        if(query.isEmpty()) {
+            fetchTrucksInfoList()
+        } else {
+            viewModelScope.launch {
+                searchTrucksInfoUseCase.search(query)
+                    .collect {
+                        when (it) {
+                            is DataState.OnError -> {
+                                val errorObject = it.response
+                                _trucksInfoStateFlow.value = UiState.OnFailure(
+                                    error = errorObject.message,
+                                    errorDescription = errorObject.description
+                                )
+                            }
+
+                            is DataState.OnSuccess<*> -> {
+                                val list = it.response.data as List<*>
+                                _trucksInfoStateFlow.value = UiState.OnSuccess(list)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
 }

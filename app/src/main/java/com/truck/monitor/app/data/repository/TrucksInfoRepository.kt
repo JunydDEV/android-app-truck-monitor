@@ -16,10 +16,10 @@ interface TrucksInfoRepository {
     /**
      * Search for the truck info list based on the location.
      *
-     * @param location address to fetch the trucks info list.
+     * @param query driver/location to fetch the trucks info list.
      * @return list contains the info about the trucks of specified location.
      */
-    fun searchTruckInfo(location: String): Flow<DataState>
+    fun searchTruckInfo(query: String): Flow<DataState>
 
     /**
      * Sorts the truck info list
