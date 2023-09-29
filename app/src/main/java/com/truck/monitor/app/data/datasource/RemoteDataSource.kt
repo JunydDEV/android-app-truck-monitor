@@ -1,6 +1,9 @@
 package com.truck.monitor.app.data.datasource
 
+import com.google.gson.JsonParseException
 import com.truck.monitor.app.data.model.TruckInfoListItem
+import java.io.IOException
+
 
 interface RemoteDataSource {
 

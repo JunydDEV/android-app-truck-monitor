@@ -8,15 +8,17 @@ import com.truck.monitor.app.data.network.ApiService
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.jvm.Throws
 
 @Singleton
 class RemoteDataSourceImpl @Inject constructor(
     private val apiService: ApiService,
 ) : RemoteDataSource {
 
+    @Throws(NoNetworkException::class, JsonParseException::class)
     override suspend fun fetchTruckMonitoringData(): List<TruckInfoListItem> {
         try {
-            return apiService.fetchTruckMonitoryData()
+            return apiService.fetchTruckMonitoringData()
         } catch (e: IOException) {
             throw NoNetworkException(
                 title = "Network Error",
