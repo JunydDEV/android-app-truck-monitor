@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("/api/candidate")
-    suspend fun getTrucksInfoList(): List<TruckInfoListItem>
+    suspend fun fetchTruckMonitoryData(): List<TruckInfoListItem>
 }

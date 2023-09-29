@@ -11,8 +11,8 @@ interface AppDao {
     fun saveTruckInfoEntitiesList(entities: List<TruckInfoDataEntity>)
 
     @Query("SELECT * FROM truck_info_data")
-    fun getTruckInfoEntitiesList(): List<TruckInfoDataEntity>?
+    fun getTruckMonitoringLocalData(): List<TruckInfoDataEntity>?
 
     @Query("SELECT * FROM truck_info_data WHERE driver_name LIKE '%' || :query || '%' OR location LIKE '%' || :query || '%'")
-    fun getTruckInfoEntitiesList(query: String): List<TruckInfoDataEntity>?
+    fun getTruckMonitoringLocalData(query: String): List<TruckInfoDataEntity>?
 }

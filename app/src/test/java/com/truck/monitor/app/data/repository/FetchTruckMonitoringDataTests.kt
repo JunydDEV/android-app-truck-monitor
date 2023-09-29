@@ -30,13 +30,13 @@ class FetchTruckMonitoringDataTests {
     lateinit var exceptionHandler: ExceptionHandler
 
     private lateinit var truckInfoMapper: TruckInfoMapper
-    private lateinit var sut: TrucksInfoRepository
+    private lateinit var sut: TruckMonitoringRepository
 
     @Before
     fun setup() {
         truckInfoMapper = TruckInfoMapper(Dispatchers.IO)
 
-        sut = TrucksInfoRepositoryImpl(
+        sut = TruckMonitoringRepositoryImpl(
             remoteDatasource = remoteDataSource,
             localDatasource = localDataSource,
             truckInfoMapper = truckInfoMapper,
@@ -53,9 +53,9 @@ class FetchTruckMonitoringDataTests {
                 validTruckInfoItem2,
                 validTruckInfoItem3
             )
-            whenever(remoteDataSource.fetchTrucksInfoList()).thenReturn(truckInfoDataList)
+            whenever(remoteDataSource.fetchTruckMonitoringData()).thenReturn(truckInfoDataList)
 
-            sut.fetchTrucksInfoList().test {
+            sut.fetchTruckMonitoringData().test {
                 val dataState = awaitItem()
                 TestCase.assertTrue(dataState is DataState.OnSuccess<*>)
 
@@ -84,11 +84,11 @@ class FetchTruckMonitoringDataTests {
             val error =
                 DataFailureResponse(noNetworkException.title, noNetworkException.description)
 
-            whenever(remoteDataSource.fetchTrucksInfoList()).thenAnswer { throw noNetworkException }
-            whenever(localDataSource.fetchTrucksInfoList()).thenReturn(emptyList())
+            whenever(remoteDataSource.fetchTruckMonitoringData()).thenAnswer { throw noNetworkException }
+            whenever(localDataSource.fetchTruckMonitoringData()).thenReturn(emptyList())
             whenever(exceptionHandler.handle(noNetworkException)).thenReturn(error)
 
-            sut.fetchTrucksInfoList().test {
+            sut.fetchTruckMonitoringData().test {
                 val dataState = awaitItem()
                 TestCase.assertTrue(dataState is DataState.OnError)
 
@@ -121,10 +121,10 @@ class FetchTruckMonitoringDataTests {
                 truckInfoMapper.toTruckInfoListItemDto(validTruckInfoItem3)
             )
 
-            whenever(remoteDataSource.fetchTrucksInfoList()).thenAnswer { throw noNetworkException }
-            whenever(localDataSource.fetchTrucksInfoList()).thenReturn(truckInfoDataDtoList)
+            whenever(remoteDataSource.fetchTruckMonitoringData()).thenAnswer { throw noNetworkException }
+            whenever(localDataSource.fetchTruckMonitoringData()).thenReturn(truckInfoDataDtoList)
 
-            sut.fetchTrucksInfoList().test {
+            sut.fetchTruckMonitoringData().test {
                 val dataState = awaitItem()
                 TestCase.assertTrue(dataState is DataState.OnSuccess<*>)
 

@@ -2,13 +2,13 @@ package com.truck.monitor.app.domain.usecases
 
 import com.truck.monitor.app.data.model.DataState
 import com.truck.monitor.app.data.model.SortingOrder
-import com.truck.monitor.app.data.repository.TrucksInfoRepository
+import com.truck.monitor.app.data.repository.TruckMonitoringRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class SortTrucksInfoListingUseCase @Inject constructor(private val repository: TrucksInfoRepository) {
+class SortTruckMonitoringDataUseCase @Inject constructor(private val repository: TruckMonitoringRepository) {
 
     operator fun invoke(sortingOrder: SortingOrder): Flow<DataState> {
-        return repository.sortListOrdered(sortingOrder)
+        return repository.sortTruckMonitoringData(sortingOrder)
     }
 }

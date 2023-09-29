@@ -43,15 +43,15 @@ import com.truck.monitor.app.ui.theme.TruckMonitorAppTheme
 fun TrucksMonitoringApp() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = hiltViewModel()
-    val truckInfoState = viewModel.trucksInfoStateFlow.collectAsState()
+    val truckInfoState = viewModel.truckMonitoringStateFlow.collectAsState()
     val sortingOrderState = remember { mutableStateOf<SortingOrder?>(null) }
 
     LaunchedEffect(Unit) {
-        viewModel.fetchTrucksInfoList()
+        viewModel.fetchTruckMonitoringData()
     }
     LaunchedEffect(key1 = sortingOrderState.value) {
         sortingOrderState.value?.let {
-            viewModel.sortListOrdered(it)
+            viewModel.sortTruckMonitoringData(it)
         }
     }
 
@@ -157,7 +157,7 @@ fun MainScreenContent(
 ) {
     val searchFieldState = remember { mutableStateOf("") }
     LaunchedEffect(key1 = searchFieldState.value) {
-        viewModel.searchLocation(searchFieldState.value)
+        viewModel.searchTruckMonitoringData(searchFieldState.value)
     }
 
     Column(

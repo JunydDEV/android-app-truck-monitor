@@ -16,30 +16,30 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TrucksInfoRepositoryImpl @Inject constructor(
+class TruckMonitoringRepositoryImpl @Inject constructor(
     private val remoteDatasource: RemoteDataSource,
     private val localDatasource: LocalDataSource,
     private val exceptionHandler: ExceptionHandler,
     private val truckInfoMapper: TruckInfoMapper,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : TrucksInfoRepository {
+) : TruckMonitoringRepository {
 
-    override fun fetchTrucksInfoList(): Flow<DataState> = flow {
+    override fun fetchTruckMonitoringData(): Flow<DataState> = flow {
         runCatching {
-            remoteDatasource.fetchTrucksInfoList()
+            remoteDatasource.fetchTruckMonitoringData()
         }.onFailure { exception ->
             exception.printStackTrace()
             handleException(exception)
         }.onSuccess { response ->
             val result = response.map { truckInfoMapper.toTruckInfoListItemDto(it) }
-            localDatasource.saveTruckInfoList(result)
+            localDatasource.saveTruckMonitoringRemoteData(result)
             val dataSuccessResponse = DataSuccessResponse(result)
             emit(DataState.OnSuccess(dataSuccessResponse))
         }
     }.flowOn(dispatcher)
 
     private suspend fun FlowCollector<DataState>.handleException(exception: Throwable) {
-        val truckInfoListItemDtoList = localDatasource.fetchTrucksInfoList()
+        val truckInfoListItemDtoList = localDatasource.fetchTruckMonitoringData()
         if (truckInfoListItemDtoList.isEmpty()) {
             val dataFailureResponse = exceptionHandler.handle(exception)
             emit(DataState.OnError(dataFailureResponse))
@@ -48,9 +48,9 @@ class TrucksInfoRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchTruckInfo(query: String): Flow<DataState> = flow {
+    override fun searchTruckMonitoringData(query: String): Flow<DataState> = flow {
         runCatching {
-            localDatasource.searchTruckInfo(query)
+            localDatasource.searchTruckMonitoringData(query)
         }.onFailure { exception ->
             exception.printStackTrace()
             val dataFailureResponse = exceptionHandler.handle(exception)
@@ -61,9 +61,9 @@ class TrucksInfoRepositoryImpl @Inject constructor(
         }
     }.flowOn(dispatcher)
 
-    override fun sortListOrdered(order: SortingOrder): Flow<DataState> = flow {
+    override fun sortTruckMonitoringData(order: SortingOrder): Flow<DataState> = flow {
         runCatching {
-            val truckInfoListItemDtoList = localDatasource.fetchTrucksInfoList()
+            val truckInfoListItemDtoList = localDatasource.fetchTruckMonitoringData()
             if (order == SortingOrder.ASC) {
                 truckInfoListItemDtoList.sortedBy { it.lastUpdate }
             } else {

@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.truck.monitor.app.data.model.DataState
 import com.truck.monitor.app.data.model.SortingOrder
-import com.truck.monitor.app.domain.usecases.FetchTrucksInfoListUseCase
-import com.truck.monitor.app.domain.usecases.SearchTrucksInfoUseCase
-import com.truck.monitor.app.domain.usecases.SortTrucksInfoListingUseCase
+import com.truck.monitor.app.domain.usecases.FetchTruckMonitoringDataUseCase
+import com.truck.monitor.app.domain.usecases.SearchTruckMonitoringDataUseCase
+import com.truck.monitor.app.domain.usecases.SortTruckMonitoringDataUseCase
 import com.truck.monitor.app.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,49 +17,49 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val fetchTrucksInfoListUseCase: FetchTrucksInfoListUseCase,
-    private val sortTrucksInfoListingUseCase: SortTrucksInfoListingUseCase,
-    private val searchTrucksInfoUseCase: SearchTrucksInfoUseCase
+    private val fetchTruckMonitoringDataUseCase: FetchTruckMonitoringDataUseCase,
+    private val sortTruckMonitoringDataUseCase: SortTruckMonitoringDataUseCase,
+    private val searchTruckMonitoringDataUseCase: SearchTruckMonitoringDataUseCase
 ) : ViewModel() {
 
-    private val _trucksInfoStateFlow = MutableStateFlow<UiState>(UiState.OnStart)
-    val trucksInfoStateFlow: StateFlow<UiState> = _trucksInfoStateFlow
+    private val _truckMonitoringStateFlow = MutableStateFlow<UiState>(UiState.OnStart)
+    val truckMonitoringStateFlow: StateFlow<UiState> = _truckMonitoringStateFlow
 
-    fun fetchTrucksInfoList() {
+    fun fetchTruckMonitoringData() {
         viewModelScope.launch {
-            fetchTrucksInfoListUseCase()
-                .onStart { _trucksInfoStateFlow.value = UiState.OnLoading }
-                .collect { parseDataState(it) }
+            fetchTruckMonitoringDataUseCase()
+                .onStart { _truckMonitoringStateFlow.value = UiState.OnLoading }
+                .collect { parseTruckMonitoringDataState(it) }
         }
     }
 
-    fun sortListOrdered(sortingOrder: SortingOrder) {
+    fun sortTruckMonitoringData(sortingOrder: SortingOrder) {
         viewModelScope.launch {
-            sortTrucksInfoListingUseCase(sortingOrder)
-                .collect { parseDataState(it) }
+            sortTruckMonitoringDataUseCase(sortingOrder)
+                .collect { parseTruckMonitoringDataState(it) }
         }
     }
 
-    fun searchLocation(query: String) {
+    fun searchTruckMonitoringData(query: String) {
         if (query.isEmpty()) {
-            fetchTrucksInfoList()
+            fetchTruckMonitoringData()
         } else {
-            fetchTrucksInfoBy(query)
+            fetchTruckMonitoringDataBy(query)
         }
     }
 
-    private fun fetchTrucksInfoBy(query: String) {
+    private fun fetchTruckMonitoringDataBy(query: String) {
         viewModelScope.launch {
-            searchTrucksInfoUseCase(query)
-                .collect { parseDataState(it) }
+            searchTruckMonitoringDataUseCase(query)
+                .collect { parseTruckMonitoringDataState(it) }
         }
     }
 
-    private fun parseDataState(it: DataState) {
+    private fun parseTruckMonitoringDataState(it: DataState) {
         when (it) {
             is DataState.OnError -> {
                 val errorObject = it.response
-                _trucksInfoStateFlow.value = UiState.OnFailure(
+                _truckMonitoringStateFlow.value = UiState.OnFailure(
                     error = errorObject.message,
                     errorDescription = errorObject.description
                 )
@@ -67,7 +67,7 @@ class MainViewModel @Inject constructor(
 
             is DataState.OnSuccess<*> -> {
                 val list = it.response.data as List<*>
-                _trucksInfoStateFlow.value = UiState.OnSuccess(list)
+                _truckMonitoringStateFlow.value = UiState.OnSuccess(list)
             }
         }
     }

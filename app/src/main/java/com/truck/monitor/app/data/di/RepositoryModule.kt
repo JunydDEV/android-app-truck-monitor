@@ -1,7 +1,7 @@
 package com.truck.monitor.app.data.di
 
-import com.truck.monitor.app.data.repository.TrucksInfoRepository
-import com.truck.monitor.app.data.repository.TrucksInfoRepositoryImpl
+import com.truck.monitor.app.data.repository.TruckMonitoringRepository
+import com.truck.monitor.app.data.repository.TruckMonitoringRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
 
     @Binds
-    fun provideTrucksInfoRepository(impl: TrucksInfoRepositoryImpl): TrucksInfoRepository
+    fun provideTruckMonitoringRepository(impl: TruckMonitoringRepositoryImpl): TruckMonitoringRepository
 }

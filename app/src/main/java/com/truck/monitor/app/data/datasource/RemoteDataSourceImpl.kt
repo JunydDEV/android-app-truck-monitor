@@ -1,7 +1,6 @@
 package com.truck.monitor.app.data.datasource
 
 import com.google.gson.JsonParseException
-import com.google.gson.JsonSyntaxException
 import com.truck.monitor.app.data.InvalidResponseException
 import com.truck.monitor.app.data.NoNetworkException
 import com.truck.monitor.app.data.model.TruckInfoListItem
@@ -15,9 +14,9 @@ class RemoteDataSourceImpl @Inject constructor(
     private val apiService: ApiService,
 ) : RemoteDataSource {
 
-    override suspend fun fetchTrucksInfoList(): List<TruckInfoListItem> {
+    override suspend fun fetchTruckMonitoringData(): List<TruckInfoListItem> {
         try {
-            return apiService.getTrucksInfoList()
+            return apiService.fetchTruckMonitoryData()
         } catch (e: IOException) {
             throw NoNetworkException(
                 title = "Network Error",
