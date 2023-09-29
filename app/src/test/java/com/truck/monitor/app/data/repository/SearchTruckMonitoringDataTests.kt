@@ -52,7 +52,7 @@ class SearchTruckMonitoringDataTests {
         runTest {
             val query = "Ali"
             val truckInfoDataDtoList = listOf(
-                truckInfoMapper.toTruckInfoListItemDto(validTruckInfoItem1),
+                truckInfoMapper.toTruckInfoListItemDto(truckInfoItem1),
             )
             whenever(localDataSource.searchTruckMonitoringData(query)).thenReturn(truckInfoDataDtoList)
 

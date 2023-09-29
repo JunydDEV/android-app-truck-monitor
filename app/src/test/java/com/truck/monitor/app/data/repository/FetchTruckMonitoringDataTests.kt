@@ -49,9 +49,9 @@ class FetchTruckMonitoringDataTests {
     fun `fetchTrucksInfoList when remote data source returns a valid response and stores data locally`() =
         runTest {
             val truckInfoDataList = listOf(
-                validTruckInfoItem1,
-                validTruckInfoItem2,
-                validTruckInfoItem3
+                truckInfoItem1,
+                truckInfoItem2,
+                truckInfoItem3
             )
             whenever(remoteDataSource.fetchTruckMonitoringData()).thenReturn(truckInfoDataList)
 
@@ -116,9 +116,9 @@ class FetchTruckMonitoringDataTests {
                 description = networkErrorDescription
             )
             val truckInfoDataDtoList = listOf(
-                truckInfoMapper.toTruckInfoListItemDto(validTruckInfoItem1),
-                truckInfoMapper.toTruckInfoListItemDto(validTruckInfoItem2),
-                truckInfoMapper.toTruckInfoListItemDto(validTruckInfoItem3)
+                truckInfoMapper.toTruckInfoListItemDto(truckInfoItem1),
+                truckInfoMapper.toTruckInfoListItemDto(truckInfoItem2),
+                truckInfoMapper.toTruckInfoListItemDto(truckInfoItem3)
             )
 
             whenever(remoteDataSource.fetchTruckMonitoringData()).thenAnswer { throw noNetworkException }
