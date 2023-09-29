@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class FetchTrucksInfoListUseCase @Inject constructor(private val repository: TrucksInfoRepository) {
 
-    suspend operator fun invoke(): Flow<DataState> {
+    operator fun invoke(): Flow<DataState> {
         return repository.fetchTrucksInfoList()
     }
 }

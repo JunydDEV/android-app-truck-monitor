@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SearchTrucksInfoUseCase @Inject constructor(
     private val repository: TrucksInfoRepository
 ) {
-    fun search(query: String): Flow<DataState> {
+    operator fun invoke(query: String): Flow<DataState> {
         return repository.searchTruckInfo(query)
     }
 

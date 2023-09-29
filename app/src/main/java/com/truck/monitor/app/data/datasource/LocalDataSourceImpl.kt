@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class LocalDataSourceImpl @Inject constructor(
     private val appDao: AppDao,
     private val truckInfoDataEntityMapper: TruckInfoDataEntityMapper,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : LocalDataSource {
 
     override suspend fun fetchTrucksInfoList(): List<TruckInfoListItemDto> {

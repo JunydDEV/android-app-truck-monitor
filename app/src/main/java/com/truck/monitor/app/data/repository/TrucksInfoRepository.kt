@@ -11,7 +11,7 @@ interface TrucksInfoRepository {
      *
      * @return list contains info about the truck monitoring i.e. location, driverName etc.
      */
-    suspend fun fetchTrucksInfoList(): Flow<DataState>
+    fun fetchTrucksInfoList(): Flow<DataState>
 
     /**
      * Search for the truck monitoring info list based on the location.
@@ -26,5 +26,5 @@ interface TrucksInfoRepository {
      *
      * @return list contains info about the trucks i.e. location, driverName etc.
      * */
-    suspend fun sortListOrdered(order: SortingOrder): Flow<DataState>
+    fun sortListOrdered(order: SortingOrder): Flow<DataState>
 }

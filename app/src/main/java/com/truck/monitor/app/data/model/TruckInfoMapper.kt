@@ -1,12 +1,13 @@
 package com.truck.monitor.app.data.model
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 
-class TruckInfoMapper(private val dispatcher: CoroutineDispatcher) {
+class TruckInfoMapper(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
     suspend fun toTruckInfoListItemDto(item: TruckInfoListItem): TruckInfoListItemDto {
         val (lastUpdateInHours, lastUpdateInDays) = convertIntoDays(item.lastUpdated)
