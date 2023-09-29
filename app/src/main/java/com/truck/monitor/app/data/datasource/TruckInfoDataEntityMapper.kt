@@ -3,6 +3,7 @@ package com.truck.monitor.app.data.datasource
 import com.truck.monitor.app.data.database.TruckInfoDataEntity
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
