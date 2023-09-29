@@ -28,72 +28,46 @@ class MainViewModel @Inject constructor(
     fun fetchTrucksInfoList() {
         viewModelScope.launch {
             fetchTrucksInfoListUseCase()
-                .onStart {
-                    _trucksInfoStateFlow.value = UiState.OnLoading
-                }
-                .collect {
-                    when (it) {
-                        is DataState.OnError -> {
-                            val errorObject = it.response
-                            _trucksInfoStateFlow.value = UiState.OnFailure(
-                                error = errorObject.message,
-                                errorDescription = errorObject.description
-                            )
-                        }
-
-                        is DataState.OnSuccess<*> -> {
-                            val list = it.response.data as List<*>
-                            _trucksInfoStateFlow.value = UiState.OnSuccess(list)
-                        }
-                    }
-                }
+                .onStart { _trucksInfoStateFlow.value = UiState.OnLoading }
+                .collect { parseDataState(it) }
         }
     }
 
     fun sortListOrdered(sortingOrder: SortingOrder) {
         viewModelScope.launch {
-            sortTrucksInfoListingUseCase.sortListOrdered(sortingOrder)
-                .collect {
-                    when (it) {
-                        is DataState.OnError -> {
-                            val errorObject = it.response
-                            _trucksInfoStateFlow.value = UiState.OnFailure(
-                                error = errorObject.message,
-                                errorDescription = errorObject.description
-                            )
-                        }
-
-                        is DataState.OnSuccess<*> -> {
-                            val list = it.response.data as List<*>
-                            _trucksInfoStateFlow.value = UiState.OnSuccess(list)
-                        }
-                    }
-                }
+            sortTrucksInfoListingUseCase(sortingOrder)
+                .collect { parseDataState(it) }
         }
     }
 
     fun searchLocation(query: String) {
-        if(query.isEmpty()) {
+        if (query.isEmpty()) {
             fetchTrucksInfoList()
         } else {
-            viewModelScope.launch {
-                searchTrucksInfoUseCase.search(query)
-                    .collect {
-                        when (it) {
-                            is DataState.OnError -> {
-                                val errorObject = it.response
-                                _trucksInfoStateFlow.value = UiState.OnFailure(
-                                    error = errorObject.message,
-                                    errorDescription = errorObject.description
-                                )
-                            }
+            fetchTrucksInfoBy(query)
+        }
+    }
 
-                            is DataState.OnSuccess<*> -> {
-                                val list = it.response.data as List<*>
-                                _trucksInfoStateFlow.value = UiState.OnSuccess(list)
-                            }
-                        }
-                    }
+    private fun fetchTrucksInfoBy(query: String) {
+        viewModelScope.launch {
+            searchTrucksInfoUseCase(query)
+                .collect { parseDataState(it) }
+        }
+    }
+
+    private fun parseDataState(it: DataState) {
+        when (it) {
+            is DataState.OnError -> {
+                val errorObject = it.response
+                _trucksInfoStateFlow.value = UiState.OnFailure(
+                    error = errorObject.message,
+                    errorDescription = errorObject.description
+                )
+            }
+
+            is DataState.OnSuccess<*> -> {
+                val list = it.response.data as List<*>
+                _trucksInfoStateFlow.value = UiState.OnSuccess(list)
             }
         }
     }
