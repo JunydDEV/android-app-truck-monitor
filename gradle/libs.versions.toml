@@ -19,6 +19,10 @@ coil = "2.4.0"
 kotlinx-datetime = "0.4.1"
 google-maps-compose = "2.14.0"
 google-maps = "18.1.0"
+mockito-core=  "5.3.1"
+mockito-kotlin-test=  "5.1.0"
+turbine-test = "0.11.0"
+coroutine-test = "1.7.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -52,6 +56,11 @@ coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime"}
 google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "google-maps-compose"}
 google-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "google-maps" }
+
+mockito-core-test = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core"}
+mockito-kotlin-test = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin-test"}
+turbine-test = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-test"}
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

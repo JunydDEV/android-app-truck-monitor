@@ -80,6 +80,10 @@ dependencies {
     implementation(libs.google.maps)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core.test)
+    testImplementation(libs.mockito.kotlin.test)
+    testImplementation(libs.turbine.test)
+    testImplementation(libs.coroutine.test)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
