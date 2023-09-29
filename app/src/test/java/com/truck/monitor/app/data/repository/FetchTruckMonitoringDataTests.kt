@@ -4,10 +4,12 @@ import app.cash.turbine.test
 import com.truck.monitor.app.data.NoNetworkException
 import com.truck.monitor.app.data.datasource.LocalDataSource
 import com.truck.monitor.app.data.datasource.RemoteDataSource
+import com.truck.monitor.app.data.model.TruckInfoMapper
 import com.truck.monitor.app.data.model.datastate.DataFailureResponse
 import com.truck.monitor.app.data.model.datastate.DataState
-import com.truck.monitor.app.data.model.TruckInfoMapper
-import junit.framework.TestCase
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -57,16 +59,16 @@ class FetchTruckMonitoringDataTests {
 
             sut.fetchTruckMonitoringData().test {
                 val dataState = awaitItem()
-                TestCase.assertTrue(dataState is DataState.OnSuccess<*>)
+                assertTrue(dataState is DataState.OnSuccess<*>)
 
                 val successState = dataState as DataState.OnSuccess<*>
-                TestCase.assertNotNull(successState.response)
-                TestCase.assertNotNull(successState.response.data)
+                assertNotNull(successState.response)
+                assertNotNull(successState.response.data)
 
                 val truckInfoListItemDto = successState.response.data as List<*>
-                TestCase.assertNotNull(truckInfoListItemDto)
-                TestCase.assertTrue(truckInfoListItemDto.isNotEmpty())
-                TestCase.assertTrue(truckInfoListItemDto.size == 3)
+                assertNotNull(truckInfoListItemDto)
+                assertTrue(truckInfoListItemDto.isNotEmpty())
+                assertTrue(truckInfoListItemDto.size == 3)
 
                 cancelAndIgnoreRemainingEvents()
             }
@@ -90,16 +92,16 @@ class FetchTruckMonitoringDataTests {
 
             sut.fetchTruckMonitoringData().test {
                 val dataState = awaitItem()
-                TestCase.assertTrue(dataState is DataState.OnError)
+                assertTrue(dataState is DataState.OnError)
 
                 val errorState = dataState as DataState.OnError
                 val errorResponse = errorState.response
-                TestCase.assertNotNull(errorResponse)
-                TestCase.assertNotNull(errorResponse.message)
-                TestCase.assertNotNull(errorResponse.description)
+                assertNotNull(errorResponse)
+                assertNotNull(errorResponse.message)
+                assertNotNull(errorResponse.description)
 
-                TestCase.assertEquals(networkErrorTitle, errorResponse.message)
-                TestCase.assertEquals(networkErrorDescription, errorResponse.description)
+                assertEquals(networkErrorTitle, errorResponse.message)
+                assertEquals(networkErrorDescription, errorResponse.description)
 
                 verify(exceptionHandler).handle(noNetworkException)
                 cancelAndIgnoreRemainingEvents()
@@ -126,16 +128,16 @@ class FetchTruckMonitoringDataTests {
 
             sut.fetchTruckMonitoringData().test {
                 val dataState = awaitItem()
-                TestCase.assertTrue(dataState is DataState.OnSuccess<*>)
+                assertTrue(dataState is DataState.OnSuccess<*>)
 
                 val successState = dataState as DataState.OnSuccess<*>
-                TestCase.assertNotNull(successState.response)
-                TestCase.assertNotNull(successState.response.data)
+                assertNotNull(successState.response)
+                assertNotNull(successState.response.data)
 
                 val truckInfoListItemDto = successState.response.data as List<*>
-                TestCase.assertNotNull(truckInfoListItemDto)
-                TestCase.assertTrue(truckInfoListItemDto.isNotEmpty())
-                TestCase.assertTrue(truckInfoListItemDto.size == 3)
+                assertNotNull(truckInfoListItemDto)
+                assertTrue(truckInfoListItemDto.isNotEmpty())
+                assertTrue(truckInfoListItemDto.size == 3)
 
                 cancelAndIgnoreRemainingEvents()
             }
