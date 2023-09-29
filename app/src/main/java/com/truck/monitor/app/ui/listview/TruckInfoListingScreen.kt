@@ -1,4 +1,4 @@
-package com.truck.monitor.app.ui.list
+package com.truck.monitor.app.ui.listview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

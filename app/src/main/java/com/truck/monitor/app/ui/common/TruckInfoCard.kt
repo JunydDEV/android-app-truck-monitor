@@ -1,6 +1,5 @@
 package com.truck.monitor.app.ui.common
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,7 @@ import androidx.compose.ui.res.dimensionResource
 import coil.compose.SubcomposeAsyncImage
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
-import com.truck.monitor.app.ui.list.TextX
+import com.truck.monitor.app.ui.listview.TextX
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

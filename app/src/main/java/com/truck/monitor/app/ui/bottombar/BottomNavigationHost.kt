@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.truck.monitor.app.data.model.TruckMonitoringData
-import com.truck.monitor.app.ui.list.TruckInfoListingScreen
-import com.truck.monitor.app.ui.map.TruckInfoMapScreen
+import com.truck.monitor.app.ui.listview.TruckInfoListingScreen
+import com.truck.monitor.app.ui.mapview.TruckInfoMapScreen
 
 @Composable
 fun BottomNavigationHost(navController: NavHostController, truckMonitoringData: TruckMonitoringData) {

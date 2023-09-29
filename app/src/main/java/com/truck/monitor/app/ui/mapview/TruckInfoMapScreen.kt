@@ -1,4 +1,4 @@
-package com.truck.monitor.app.ui.map
+package com.truck.monitor.app.ui.mapview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

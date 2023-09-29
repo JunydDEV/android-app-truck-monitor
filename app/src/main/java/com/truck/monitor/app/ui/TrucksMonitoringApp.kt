@@ -173,10 +173,6 @@ fun MainScreenContent(
         )
 
         when (val uiState = truckInfoState.value) {
-            is UiState.OnStart -> {
-                // Nothing TBD here.
-            }
-
             is UiState.OnLoading -> {
                 ProgressIndicator()
             }
@@ -192,6 +188,7 @@ fun MainScreenContent(
                     truckMonitoringData = TruckMonitoringData(truckInfoList)
                 )
             }
+            else -> {}
         }
 
     }
