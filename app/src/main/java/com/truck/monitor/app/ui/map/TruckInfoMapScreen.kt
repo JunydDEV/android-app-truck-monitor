@@ -24,12 +24,12 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import com.truck.monitor.app.R
-import com.truck.monitor.app.ui.TruckInfoData
+import com.truck.monitor.app.data.model.TruckMonitoringData
 import com.truck.monitor.app.ui.common.TruckInfoCard
 import kotlinx.coroutines.launch
 
 @Composable
-fun TruckInfoMapScreen(data: TruckInfoData) {
+fun TruckInfoMapScreen(data: TruckMonitoringData) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter

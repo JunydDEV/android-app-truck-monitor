@@ -1,7 +1,7 @@
-package com.truck.monitor.app.ui
+package com.truck.monitor.app.data.model
 
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import javax.annotation.concurrent.Immutable
 
 @Immutable
-data class TruckInfoData(val list: List<TruckInfoListItemDto>)
+data class TruckMonitoringData(val list: List<TruckInfoListItemDto>)

@@ -1,6 +1,5 @@
 package com.truck.monitor.app.ui.list
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,25 +10,18 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.truck.monitor.app.R
-import com.truck.monitor.app.data.model.SortingOrder
-import com.truck.monitor.app.ui.TruckInfoData
+import com.truck.monitor.app.data.model.TruckMonitoringData
 import com.truck.monitor.app.ui.common.TruckInfoCard
-import kotlinx.coroutines.launch
 
 @Composable
-fun TruckInfoListingScreen(data: TruckInfoData) {
+fun TruckInfoListingScreen(data: TruckMonitoringData) {
     val truckInfoList = data.list
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()

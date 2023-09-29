@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
+import com.truck.monitor.app.data.model.TruckMonitoringData
 import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
 import com.truck.monitor.app.ui.bottombar.BottomNavigationHost
 import com.truck.monitor.app.ui.common.FailureScreen
@@ -187,7 +189,7 @@ fun MainScreenContent(
                 val truckInfoList = uiState.data as List<TruckInfoListItemDto>
                 BottomNavigationHost(
                     navController = navController,
-                    truckInfoData = TruckInfoData(truckInfoList)
+                    truckMonitoringData = TruckMonitoringData(truckInfoList)
                 )
             }
         }
@@ -202,7 +204,7 @@ fun SearchTextField(modifier: Modifier = Modifier, value: String, onValueChange:
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
-            .padding(16.dp)
+            .padding(dimensionResource(id = R.dimen.default_spacing))
     ) {
         TextField(
             value = value,
