@@ -21,7 +21,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
-class SearchTruckMonitoryDataTests {
+class SearchTruckMonitoringDataTests {
     @Mock
     lateinit var remoteDataSource: RemoteDataSource
 
@@ -32,13 +32,13 @@ class SearchTruckMonitoryDataTests {
     lateinit var exceptionHandler: ExceptionHandler
 
     private lateinit var truckInfoMapper: TruckInfoMapper
-    private lateinit var sut: TrucksInfoRepository
+    private lateinit var sut: TruckMonitoringRepository
 
     @Before
     fun setup() {
         truckInfoMapper = TruckInfoMapper(Dispatchers.IO)
 
-        sut = TrucksInfoRepositoryImpl(
+        sut = TruckMonitoringRepositoryImpl(
             remoteDatasource = remoteDataSource,
             localDatasource = localDataSource,
             truckInfoMapper = truckInfoMapper,
@@ -54,9 +54,9 @@ class SearchTruckMonitoryDataTests {
             val truckInfoDataDtoList = listOf(
                 truckInfoMapper.toTruckInfoListItemDto(validTruckInfoItem1),
             )
-            whenever(localDataSource.searchTruckInfo(query)).thenReturn(truckInfoDataDtoList)
+            whenever(localDataSource.searchTruckMonitoringData(query)).thenReturn(truckInfoDataDtoList)
 
-            sut.searchTruckInfo(query).test {
+            sut.searchTruckMonitoringData(query).test {
                 val dataState = awaitItem()
                 assertTrue(dataState is DataState.OnSuccess<*>)
 
@@ -88,10 +88,10 @@ class SearchTruckMonitoryDataTests {
                 searchNotFoundException.title,
                 searchNotFoundException.description
             )
-            whenever(localDataSource.searchTruckInfo(query)).thenAnswer { throw searchNotFoundException }
+            whenever(localDataSource.searchTruckMonitoringData(query)).thenAnswer { throw searchNotFoundException }
             whenever(exceptionHandler.handle(searchNotFoundException)).thenReturn(error)
 
-            sut.searchTruckInfo(query).test {
+            sut.searchTruckMonitoringData(query).test {
                 val dataState = awaitItem()
                 assertTrue(dataState is DataState.OnError)
 
