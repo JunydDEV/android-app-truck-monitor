@@ -2,7 +2,7 @@ package com.truck.monitor.app.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.truck.monitor.app.data.model.DataState
+import com.truck.monitor.app.data.model.datastate.DataState
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.domain.usecases.FetchTruckMonitoringDataUseCase
 import com.truck.monitor.app.domain.usecases.SearchTruckMonitoringDataUseCase

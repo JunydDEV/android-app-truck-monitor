@@ -4,7 +4,7 @@ import com.truck.monitor.app.data.IntegrityCheckFailureException
 import com.truck.monitor.app.data.InvalidResponseException
 import com.truck.monitor.app.data.NoNetworkException
 import com.truck.monitor.app.data.SearchResultNotFoundException
-import com.truck.monitor.app.data.model.DataFailureResponse
+import com.truck.monitor.app.data.model.datastate.DataFailureResponse
 import javax.inject.Inject
 
 class ExceptionHandler @Inject constructor() {

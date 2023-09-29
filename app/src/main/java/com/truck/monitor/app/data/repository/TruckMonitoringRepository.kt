@@ -1,6 +1,6 @@
 package com.truck.monitor.app.data.repository
 
-import com.truck.monitor.app.data.model.DataState
+import com.truck.monitor.app.data.model.datastate.DataState
 import com.truck.monitor.app.data.model.SortingOrder
 import kotlinx.coroutines.flow.Flow
 

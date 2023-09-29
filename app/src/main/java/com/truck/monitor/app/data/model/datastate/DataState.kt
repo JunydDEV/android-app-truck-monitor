@@ -1,4 +1,4 @@
-package com.truck.monitor.app.data.model
+package com.truck.monitor.app.data.model.datastate
 
 sealed class DataState {
     class OnError(val response: DataFailureResponse) : DataState()

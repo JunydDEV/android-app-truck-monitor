@@ -2,8 +2,8 @@ package com.truck.monitor.app.data.repository
 
 import com.truck.monitor.app.data.datasource.LocalDataSource
 import com.truck.monitor.app.data.datasource.RemoteDataSource
-import com.truck.monitor.app.data.model.DataState
-import com.truck.monitor.app.data.model.DataSuccessResponse
+import com.truck.monitor.app.data.model.datastate.DataState
+import com.truck.monitor.app.data.model.datastate.DataSuccessResponse
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfoMapper
 import kotlinx.coroutines.CoroutineDispatcher

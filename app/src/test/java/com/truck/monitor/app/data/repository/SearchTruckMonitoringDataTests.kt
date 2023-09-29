@@ -4,8 +4,8 @@ import app.cash.turbine.test
 import com.truck.monitor.app.data.SearchResultNotFoundException
 import com.truck.monitor.app.data.datasource.LocalDataSource
 import com.truck.monitor.app.data.datasource.RemoteDataSource
-import com.truck.monitor.app.data.model.DataFailureResponse
-import com.truck.monitor.app.data.model.DataState
+import com.truck.monitor.app.data.model.datastate.DataFailureResponse
+import com.truck.monitor.app.data.model.datastate.DataState
 import com.truck.monitor.app.data.model.TruckInfoMapper
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
