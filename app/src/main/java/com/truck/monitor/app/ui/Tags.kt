@@ -1,4 +1,4 @@
-package com.truck.monitor.app
+package com.truck.monitor.app.ui
 
 const val progressIndicatorTestTag = "ProgressIndicator"
 const val bottomNavigationTestTag = "BottomNavigationIndicator"

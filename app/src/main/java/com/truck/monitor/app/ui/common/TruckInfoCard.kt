@@ -25,7 +25,7 @@ import androidx.compose.ui.res.dimensionResource
 import coil.compose.SubcomposeAsyncImage
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
-import com.truck.monitor.app.truckInfoCardTestTag
+import com.truck.monitor.app.ui.truckInfoCardTestTag
 import com.truck.monitor.app.ui.listview.TextX
 
 @OptIn(ExperimentalMaterial3Api::class)

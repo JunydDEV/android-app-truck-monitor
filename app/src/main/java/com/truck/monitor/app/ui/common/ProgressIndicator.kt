@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import com.truck.monitor.app.progressIndicatorTestTag
+import com.truck.monitor.app.ui.progressIndicatorTestTag
 
 @Composable
 fun ProgressIndicator() {

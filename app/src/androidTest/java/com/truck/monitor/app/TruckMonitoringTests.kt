@@ -14,6 +14,17 @@ import androidx.compose.ui.test.performTextInput
 import androidx.test.espresso.Espresso
 import com.truck.monitor.app.ui.MainActivity
 import com.truck.monitor.app.ui.TrucksMonitoringApp
+import com.truck.monitor.app.ui.bottomNavigationTestTag
+import com.truck.monitor.app.ui.failureContainerTestTag
+import com.truck.monitor.app.ui.googleMapTestTag
+import com.truck.monitor.app.ui.progressIndicatorTestTag
+import com.truck.monitor.app.ui.searchFieldTestTag
+import com.truck.monitor.app.ui.sortListingTestTag
+import com.truck.monitor.app.ui.topAppbarTestTag
+import com.truck.monitor.app.ui.truckInfoCardTestTag
+import com.truck.monitor.app.ui.truckInfoHorizontalListTestTag
+import com.truck.monitor.app.ui.truckMonitoringListTestTag
+import com.truck.monitor.app.ui.truckMonitoringMapTestTag
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before

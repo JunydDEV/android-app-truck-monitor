@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
-import com.truck.monitor.app.failureContainerTestTag
+import com.truck.monitor.app.ui.failureContainerTestTag
 import com.truck.monitor.app.ui.state.UiState
 
 @Composable

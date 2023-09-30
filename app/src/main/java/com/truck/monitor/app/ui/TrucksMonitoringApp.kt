@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -35,9 +34,6 @@ import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import com.truck.monitor.app.data.model.TruckMonitoringData
-import com.truck.monitor.app.searchFieldTestTag
-import com.truck.monitor.app.sortListingTestTag
-import com.truck.monitor.app.topAppbarTestTag
 import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
 import com.truck.monitor.app.ui.bottombar.BottomNavigationHost
 import com.truck.monitor.app.ui.common.FailureScreen

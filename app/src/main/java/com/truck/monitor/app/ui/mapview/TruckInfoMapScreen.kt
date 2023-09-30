@@ -26,9 +26,9 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckMonitoringData
-import com.truck.monitor.app.googleMapTestTag
-import com.truck.monitor.app.truckInfoHorizontalListTestTag
-import com.truck.monitor.app.truckMonitoringMapTestTag
+import com.truck.monitor.app.ui.googleMapTestTag
+import com.truck.monitor.app.ui.truckInfoHorizontalListTestTag
+import com.truck.monitor.app.ui.truckMonitoringMapTestTag
 import com.truck.monitor.app.ui.common.TruckInfoCard
 import kotlinx.coroutines.launch
 

@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.truck.monitor.app.bottomNavigationTestTag
+import com.truck.monitor.app.ui.bottomNavigationTestTag
 import com.truck.monitor.app.data.model.TruckMonitoringData
 import com.truck.monitor.app.ui.listview.TruckInfoListingScreen
 import com.truck.monitor.app.ui.mapview.TruckInfoMapScreen
