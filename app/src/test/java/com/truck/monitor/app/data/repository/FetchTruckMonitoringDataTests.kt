@@ -68,7 +68,7 @@ class FetchTruckMonitoringDataTests {
                 val truckInfoListItemDto = successState.response.data as List<*>
                 assertNotNull(truckInfoListItemDto)
                 assertTrue(truckInfoListItemDto.isNotEmpty())
-                assertTrue(truckInfoListItemDto.size == 3)
+                assertTrue(truckInfoListItemDto.size == truckInfoDataList.size)
 
                 cancelAndIgnoreRemainingEvents()
             }
@@ -134,10 +134,10 @@ class FetchTruckMonitoringDataTests {
                 assertNotNull(successState.response)
                 assertNotNull(successState.response.data)
 
-                val truckInfoListItemDto = successState.response.data as List<*>
-                assertNotNull(truckInfoListItemDto)
-                assertTrue(truckInfoListItemDto.isNotEmpty())
-                assertTrue(truckInfoListItemDto.size == 3)
+                val resultList = successState.response.data as List<*>
+                assertNotNull(resultList)
+                assertTrue(resultList.isNotEmpty())
+                assertTrue(resultList.size == truckInfoDataDtoList.size)
 
                 cancelAndIgnoreRemainingEvents()
             }
