@@ -1,7 +1,7 @@
 # Truck Mintor App
 
 An Android app that shows the list of the truck info on the list and map.
-
+![alt text](https://github.com/JunydDEV/android-app-truck-monitor/blob/main/screenshots/image_truck_monitor.png)
 
 
 ## Architecture
@@ -33,7 +33,3 @@ This app includes the following libraries,
 - Retrofit
 - Kotlin Coroutines
 - Kotlin Datetime
-
-
-## Screenshots
-![alt text](https://github.com/JunydDEV/android-app-truck-monitor/blob/main/screenshots/image_listing.png)
