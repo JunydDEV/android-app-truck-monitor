@@ -23,6 +23,7 @@ mockito-core=  "5.3.1"
 mockito-kotlin-test=  "5.1.0"
 turbine-test = "0.11.0"
 coroutine-test = "1.7.1"
+hilt-android-test = "2.44"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -61,6 +62,9 @@ mockito-core-test = { group = "org.mockito", name = "mockito-core", version.ref 
 mockito-kotlin-test = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin-test"}
 turbine-test = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-test"}
 coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test"}
+hilt-android-test = {group = "com.google.dagger", name="hilt-android-testing", version.ref="hilt-android-test"}
+hilt-compiler-test = {group="com.google.dagger", name="hilt-android-compiler", version.ref="hilt-android-test"}
+core = { group = "com.google.ar", name = "core", version = "1.39.0" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

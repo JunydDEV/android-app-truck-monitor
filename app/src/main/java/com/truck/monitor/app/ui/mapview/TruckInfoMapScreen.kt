@@ -15,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -25,13 +26,16 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckMonitoringData
+import com.truck.monitor.app.googleMapTestTag
+import com.truck.monitor.app.truckInfoHorizontalListTestTag
+import com.truck.monitor.app.truckMonitoringMapTestTag
 import com.truck.monitor.app.ui.common.TruckInfoCard
 import kotlinx.coroutines.launch
 
 @Composable
 fun TruckInfoMapScreen(data: TruckMonitoringData) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().testTag(truckMonitoringMapTestTag),
         contentAlignment = Alignment.BottomCenter
     ) {
         val truckInfoList = data.list
@@ -49,7 +53,7 @@ fun TruckInfoMapScreen(data: TruckMonitoringData) {
             rememberSaveable { mutableStateOf(0) }
 
         GoogleMap(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().testTag(googleMapTestTag),
             cameraPositionState = cameraPositionState,
             uiSettings = MapUiSettings(
                 zoomControlsEnabled = false
@@ -74,7 +78,7 @@ fun TruckInfoMapScreen(data: TruckMonitoringData) {
         }
 
         LazyRow(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag(truckInfoHorizontalListTestTag),
             state = lazyRowState,
             contentPadding = PaddingValues(dimensionResource(id = R.dimen.default_spacing)),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.default_spacing))

@@ -6,11 +6,15 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import com.truck.monitor.app.progressIndicatorTestTag
 
 @Composable
 fun ProgressIndicator() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(progressIndicatorTestTag),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()

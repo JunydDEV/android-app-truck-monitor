@@ -20,10 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import coil.compose.SubcomposeAsyncImage
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
+import com.truck.monitor.app.truckInfoCardTestTag
 import com.truck.monitor.app.ui.listview.TextX
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +37,9 @@ fun TruckInfoCard(
 ) {
     val smallSpacing = dimensionResource(id = R.dimen.small_spacing)
     Card(
-        modifier = modifier.height(dimensionResource(id = R.dimen.card_normal_height)),
+        modifier = modifier
+            .height(dimensionResource(id = R.dimen.card_normal_height))
+            .testTag(truckInfoCardTestTag),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.onPrimary
         ),

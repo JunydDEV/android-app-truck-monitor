@@ -17,7 +17,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.truck.monitor.app.CustomTestRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -64,6 +65,7 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.hilt)
+    implementation(libs.core)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.dagger)
     kapt(libs.hilt.dagger.compiler)
@@ -84,10 +86,14 @@ dependencies {
     testImplementation(libs.mockito.kotlin.test)
     testImplementation(libs.turbine.test)
     testImplementation(libs.coroutine.test)
+
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.test)
+    kaptAndroidTest(libs.hilt.compiler.test)
+
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 }

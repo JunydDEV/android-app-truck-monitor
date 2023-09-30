@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,9 @@ import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.SortingOrder
 import com.truck.monitor.app.data.model.TruckInfoListItemDto
 import com.truck.monitor.app.data.model.TruckMonitoringData
+import com.truck.monitor.app.searchFieldTestTag
+import com.truck.monitor.app.sortListingTestTag
+import com.truck.monitor.app.topAppbarTestTag
 import com.truck.monitor.app.ui.bottombar.BottomNavigationBar
 import com.truck.monitor.app.ui.bottombar.BottomNavigationHost
 import com.truck.monitor.app.ui.common.FailureScreen
@@ -114,7 +118,9 @@ fun AppTopBar(
     CenterAlignedTopAppBar(
         title = { AppTitle() },
         actions = { SortListingAction(sortOrderValue, onSortOrderValueChange) },
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .testTag(topAppbarTestTag),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         )
@@ -135,7 +141,9 @@ fun SortListingAction(
     sortOrderValue: SortingOrder?,
     onSortOrderValueChange: (SortingOrder) -> Unit,
 ) {
-    IconButton(onClick = {
+    IconButton(
+        modifier = Modifier.testTag(sortListingTestTag),
+        onClick = {
         onSortOrderValueChange(
             if (sortOrderValue == SortingOrder.ASC) SortingOrder.DESC
             else SortingOrder.ASC
@@ -207,7 +215,9 @@ fun SearchTextField(modifier: Modifier = Modifier, value: String, onValueChange:
             value = value,
             onValueChange = { onValueChange(it) },
             label = { Text(text = "Search") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(searchFieldTestTag),
             singleLine = true
         )
     }

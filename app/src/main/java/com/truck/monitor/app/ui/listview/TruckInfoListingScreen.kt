@@ -13,21 +13,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.truck.monitor.app.R
 import com.truck.monitor.app.data.model.TruckMonitoringData
+import com.truck.monitor.app.truckMonitoringListTestTag
 import com.truck.monitor.app.ui.common.TruckInfoCard
 
 @Composable
 fun TruckInfoListingScreen(data: TruckMonitoringData) {
     val truckInfoList = data.list
-    val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(truckMonitoringListTestTag),
         state = lazyListState,
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.default_spacing)),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.default_spacing))
